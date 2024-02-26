@@ -1,6 +1,6 @@
 {
   "exclude": ["node_modules"],
-  "include": ["deploy", "test", "tasks", "hardhat.config.ts"],
+  "include": ["deploy", "test", "tasks", "hardhat.config.ts","./scripts", "./test", "./typechain-types"],
   "compilerOptions": {
     "target": "es2020",
     "module": "commonjs",
@@ -10,5 +10,6 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "types": ["node", "mocha"]
-  }
+  },
+  "files": ["./hardhat.config.ts"]
 }

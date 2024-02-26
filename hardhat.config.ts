@@ -9,6 +9,10 @@ import 'hardhat-deploy'
 import 'hardhat-contract-sizer'
 import '@nomiclabs/hardhat-ethers'
 import '@layerzerolabs/toolbox-hardhat'
+import '@typechain/hardhat'
+import '@nomicfoundation/hardhat-ethers'
+import '@nomicfoundation/hardhat-chai-matchers'
+import './tasks'
 import { HardhatUserConfig, HttpNetworkAccountsUserConfig } from 'hardhat/types'
 
 import { EndpointId } from '@layerzerolabs/lz-definitions'
@@ -49,19 +53,19 @@ const config: HardhatUserConfig = {
         ],
     },
     networks: {
-        sepolia: {
-            eid: EndpointId.SEPOLIA_V2_TESTNET,
-            url: 'https://rpc.sepolia.org/',
+        base: {
+            eid: EndpointId.BASE_V2_MAINNET,
+            url: 'https://developer-access-mainnet.base.org',
             accounts,
         },
-        fuji: {
-            eid: EndpointId.AVALANCHE_V2_TESTNET,
-            url: 'https://rpc.ankr.com/avalanche_fuji',
+        optimism: {
+            eid: EndpointId.OPTIMISM_V2_MAINNET,
+            url: 'https://optimism.llamarpc.com',
             accounts,
         },
-        mumbai: {
-            eid: EndpointId.POLYGON_V2_TESTNET,
-            url: 'https://rpc.ankr.com/polygon_mumbai',
+        arbitrum: {
+            eid: EndpointId.ARBITRUM_V2_MAINNET,
+            url: 'https://rpc.ankr.com/arbitrum',
             accounts,
         },
     },
