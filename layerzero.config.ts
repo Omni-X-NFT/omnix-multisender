@@ -1,20 +1,5 @@
 import { EndpointId } from '@layerzerolabs/lz-definitions'
 
-// const polygonOmniMultisender = {
-//     eid: EndpointId.SEPOLIA_V2_TESTNET,
-//     contractName: 'MyOApp',
-// }
-
-// const baseOmniMultisender = {
-//     eid: EndpointId.AVALANCHE_V2_TESTNET,
-//     contractName: 'MyOApp',
-// }
-
-// const arbitrumOmniMultisender = {
-//     eid: EndpointId.POLYGON_V2_TESTNET,
-//     contractName: 'MyOApp',
-// }
-
 const baseOmniMultisender = {
     eid: EndpointId.BASE_V2_MAINNET,
     contractName: 'OmniMultisender',

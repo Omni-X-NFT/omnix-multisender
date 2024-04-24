@@ -1,0 +1,107 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\koshm\AppData\Local\node\corepack\yarn\1.22.19\bin\yarn.js add @layerzerolabs/layerzero-v2
+
+PATH: 
+  C:\Program Files (x86)\Razer\ChromaBroadcast\bin;C:\Program Files\Razer\ChromaBroadcast\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Git\cmd;C:\Program Files\dotnet\;C:\Program Files (x86)\dotnet\;C:\Program Files\nodejs\;c:\Users\koshm\AppData\Local\Programs\cursor\resources\app\bin;C:\Program Files\Go\bin;C:\Windows\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Mullvad VPN\resources;C:\Program Files\UniConvertor-2.0rc5\;C:\Users\koshm\.cargo\bin;C:\Users\koshm\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\koshm\AppData\Local\Programs\Python\Python310\;C:\Users\koshm\AppData\Local\Microsoft\WindowsApps;C:\Users\koshm\AppData\Local\Programs\Microsoft VS Code\bin;C:\xampp\php;C:\MAMP\bin\php;C:\Users\koshm\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;C:\Program Files\New Relic\New Relic CLI\;C:\Users\koshm\AppData\Roaming\npm;C:\Users\koshm\go\bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  20.5.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/@layerzerolabs%2flayerzero-v2: Not found
+      at params.callback [as _callback] (C:\Users\koshm\AppData\Local\node\corepack\yarn\1.22.19\lib\cli.js:66145:18)
+      at self.callback (C:\Users\koshm\AppData\Local\node\corepack\yarn\1.22.19\lib\cli.js:140890:22)
+      at Request.emit (node:events:514:28)
+      at Request.<anonymous> (C:\Users\koshm\AppData\Local\node\corepack\yarn\1.22.19\lib\cli.js:141862:10)
+      at Request.emit (node:events:514:28)
+      at IncomingMessage.<anonymous> (C:\Users\koshm\AppData\Local\node\corepack\yarn\1.22.19\lib\cli.js:141784:12)
+      at Object.onceWrapper (node:events:628:28)
+      at IncomingMessage.emit (node:events:526:35)
+      at endReadableNT (node:internal/streams/readable:1376:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+
+npm manifest: 
+  {
+    "name": "@layerzerolabs/oapp-example",
+    "version": "0.1.3",
+    "private": true,
+    "license": "MIT",
+    "scripts": {
+      "clean": "rm -rf artifacts cache out",
+      "compile": "$npm_execpath run compile:forge && $npm_execpath run compile:hardhat",
+      "compile:forge": "forge build",
+      "compile:hardhat": "hardhat compile",
+      "lint": "$npm_execpath run lint:js && $npm_execpath run lint:sol",
+      "lint:fix": "eslint --fix '**/*.{js,ts,json}' && prettier --write . && solhint 'contracts/**/*.sol' --fix --noPrompt",
+      "lint:js": "eslint '**/*.{js,ts,json}' && prettier --check .",
+      "lint:sol": "solhint 'contracts/**/*.sol'",
+      "test": "$npm_execpath run test:forge && $npm_execpath run test:hardhat",
+      "test:forge": "forge test",
+      "test:hardhat": "hardhat test"
+    },
+    "resolutions": {
+      "@openzeppelin/contracts": "^5.0.1",
+      "ethers": "^5.7.2"
+    },
+    "devDependencies": {
+      "@babel/core": "^7.23.9",
+      "@layerzerolabs/eslint-config-next": "^2.1.7",
+      "@layerzerolabs/lz-definitions": "~2.1.7",
+      "@layerzerolabs/lz-evm-messagelib-v2": "~2.1.7",
+      "@layerzerolabs/lz-evm-oapp-v2": "~2.1.7",
+      "@layerzerolabs/lz-evm-protocol-v2": "~2.1.7",
+      "@layerzerolabs/lz-evm-v1-0.7": "~2.1.7",
+      "@layerzerolabs/lz-v2-utilities": "~2.1.7",
+      "@layerzerolabs/prettier-config-next": "^2.1.7",
+      "@layerzerolabs/solhint-config": "^2.1.7",
+      "@layerzerolabs/test-devtools-evm-foundry": "~0.1.6",
+      "@layerzerolabs/toolbox-foundry": "~0.1.1",
+      "@layerzerolabs/toolbox-hardhat": "~0.1.6",
+      "@nomicfoundation/hardhat-chai-matchers": "^2.0.6",
+      "@nomicfoundation/hardhat-ethers": "^3.0.5",
+      "@nomiclabs/hardhat-ethers": "^2.2.3",
+      "@openzeppelin/contracts": "^5.0.1",
+      "@rushstack/eslint-patch": "^1.7.0",
+      "@typechain/hardhat": "^9.1.0",
+      "@types/chai": "^4.3.11",
+      "@types/mocha": "^10.0.6",
+      "chai": "^4.4.1",
+      "dotenv": "^16.4.1",
+      "ethers": "^5.7.2",
+      "hardhat": "^2.19.5",
+      "hardhat-contract-sizer": "^2.10.0",
+      "hardhat-deploy": "^0.11.45",
+      "mocha": "^10.2.0",
+      "prettier": "^3.2.5",
+      "solhint": "^4.1.1",
+      "solidity-bytes-utils": "^0.8.2",
+      "ts-node": "^10.9.2",
+      "typechain": "^8.3.2",
+      "typescript": "^5.3.3"
+    },
+    "engines": {
+      "node": ">=18.16.0"
+    },
+    "overrides": {
+      "@openzeppelin/contracts": "^5.0.1",
+      "ethers": "^5.7.2"
+    },
+    "pnpm": {
+      "overrides": {
+        "@openzeppelin/contracts": "^5.0.1",
+        "ethers": "^5.7.2"
+      }
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
