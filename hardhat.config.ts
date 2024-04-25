@@ -53,6 +53,11 @@ const config: HardhatUserConfig = {
         ],
     },
     networks: {
+        ethereum: {
+            eid: EndpointId.ETHEREUM_V2_MAINNET,
+            url: 'https://eth.llamarpc.com',
+            accounts, 
+        },
         base: {
             eid: EndpointId.BASE_V2_MAINNET,
             url: 'https://developer-access-mainnet.base.org',
@@ -66,6 +71,241 @@ const config: HardhatUserConfig = {
         arbitrum: {
             eid: EndpointId.ARBITRUM_V2_MAINNET,
             url: 'https://rpc.ankr.com/arbitrum',
+            accounts,
+        },
+        bnb: {
+            eid: EndpointId.BSC_V2_MAINNET,
+            url: 'https://binance.llamarpc.com',
+            accounts,
+        },
+        avalanche: {
+            eid: EndpointId.AVALANCHE_V2_MAINNET,
+            url: 'https://avalanche.public-rpc.com',
+            accounts,
+        },
+        polygon: {
+            eid: EndpointId.POLYGON_V2_MAINNET,
+            url: 'https://polygon-pokt.nodies.app',
+            accounts,
+        },
+        fantom: {
+            eid: EndpointId.FANTOM_V2_MAINNET,
+            url: 'https://fantom.api.onfinality.io/public',
+            accounts,
+        },
+        dfk: {
+            eid: EndpointId.DFK_V2_MAINNET,
+            url: 'https://subnets.avax.network/defi-kingdoms/dfk-chain/rpc',
+            accounts,
+        },
+        harmony: {
+            eid: EndpointId.HARMONY_V2_MAINNET,
+            url: 'https://api.harmony.one',
+            accounts,
+        },
+        dexalot: {
+            eid: EndpointId.DEXALOT_V2_MAINNET,
+            url: 'https://subnets.avax.network/dexalot/mainnet/rpc',
+            accounts,
+        },
+        celo: {
+            eid: EndpointId.CELO_V2_MAINNET,
+            url: 'https://rpc.ankr.com/celo',
+            accounts,
+        },
+        moonbeam: {
+            eid: EndpointId.MOONBEAM_V2_MAINNET,
+            url: 'https://rpc.ankr.com/moonbeam',
+            accounts,
+        },
+        fuse: {
+            eid: EndpointId.FUSE_V2_MAINNET,
+            url: 'https://rpc.fuse.io',
+            accounts,
+        },
+        gnosis: {
+            eid: EndpointId.GNOSIS_V2_MAINNET,
+            url: 'https://gnosis-pokt.nodies.app',
+            accounts,
+        },
+        dos: {
+            eid: EndpointId.DOS_MAINNET,
+            url: 'https://main.doschain.com',
+            accounts,
+        },
+        klaytn: {
+            eid: EndpointId.KLAYTN_V2_MAINNET,
+            url: 'https://1rpc.io/klay',
+            accounts,
+        },
+        metis: {
+            eid: EndpointId.METIS_V2_MAINNET,
+            url: 'https://andromeda.metis.io/?owner=1088',
+            accounts,
+        },
+        core: {
+            eid: EndpointId.COREDAO_V2_MAINNET,
+            url: 'https://rpc.coredao.org',
+            accounts,
+        },
+        okx: {
+            eid: EndpointId.OKX_V2_MAINNET,
+            url: 'https://1rpc.io/oktc',
+            accounts,
+        },
+        canto: {
+            eid: EndpointId.CANTO_V2_MAINNET,
+            url: 'https://canto-rpc.ansybl.io',
+            accounts,
+        },
+        zksync: {
+            eid: EndpointId.ZKSYNC_V2_MAINNET,
+            url: 'https://mainnet.era.zksync.io',
+            accounts,
+        },
+        moonriver: {
+            eid: EndpointId.MOONRIVER_V2_MAINNET,
+            url: 'https://moonriver-rpc.publicnode.com',
+            accounts,
+        },
+        tenet: {
+            eid: EndpointId.TENET_V2_MAINNET,
+            url: 'https://tenet-evm.publicnode.com',
+            accounts,
+        },
+        nova: {
+            eid: EndpointId.NOVA_V2_MAINNET,
+            url: 'https://arbitrum-nova.drpc.org',
+            accounts,
+        },
+        kava: {
+            eid: EndpointId.KAVA_V2_MAINNET,
+            url: 'https://evm.kava.io',
+            accounts,
+        },
+        meter: {
+            eid: EndpointId.METER_V2_MAINNET,
+            url: 'https://rpc.meter.io',
+            accounts,
+        },
+        mantle: {
+            eid: EndpointId.MANTLE_V2_MAINNET,
+            url: 'https://mantle.drpc.org',
+            accounts,
+        },
+        hubble: {
+            eid: EndpointId.HUBBLE_V2_MAINNET,
+            url: 'https://rpc.hubble.exchange',
+            accounts,
+        },
+        linea: {
+            eid: EndpointId.LIF3_V2_MAINNET,
+            url: 'https://rpc.linea.build',
+            accounts,
+        },
+        zora: {
+            eid: EndpointId.ZORA_V2_MAINNET,
+            url: 'https://rpc.zora.energy',
+            accounts,
+        },
+        loot: {
+            eid: EndpointId.LOOT_V2_MAINNET,
+            url: 'https://rpc.lootchain.com/http',
+            accounts,
+        },
+        beam: {
+            eid: EndpointId.MERITCIRCLE_V2_MAINNET,
+            url: 'https://build.onbeam.com/rpc',
+            accounts,
+        },
+        telos: {
+            eid: EndpointId.TELOS_V2_MAINNET,
+            url: 'https://mainnet-eu.telos.net/evm',
+            accounts,
+        },
+        opBNB: {
+            eid: EndpointId.OPBNB_V2_MAINNET,
+            url: 'https://opbnb-rpc.publicnode.com',
+            accounts,
+        },
+        astar: {
+            eid: EndpointId.ASTAR_V2_MAINNET,
+            url: 'https://1rpc.io/astr',
+            accounts,
+        },
+        aurora: {
+            eid: EndpointId.AURORA_MAINNET,
+            url: 'https://arbitrum-nova.drpc.org',
+            accounts,
+        },
+        conflux: {
+            eid: EndpointId.CONFLUX_V2_MAINNET,
+            url: 'https://evm.confluxrpc.com',
+            accounts,
+        },
+        orderly: {
+            eid: EndpointId.ORDERLY_V2_MAINNET,
+            url: 'https://rpc.orderly.network',
+            accounts,
+        },
+        scroll: {
+            eid: EndpointId.SCROLL_V2_MAINNET,
+            url: 'https://scroll-mainnet.chainstacklabs.com',
+            accounts,
+        },
+        eon: {
+            eid: EndpointId.EON_V2_MAINNET,
+            url: 'https://rpc.ankr.com/horizen_eon',
+            accounts,
+        },
+        xpla: {
+            eid: EndpointId.XPLA_V2_MAINNET,
+            url: 'https://dimension-evm-rpc.xpla.dev',
+            accounts,
+        },
+        manta: {
+            eid: EndpointId.MANTA_V2_MAINNET,
+            url: 'https://1rpc.io/manta',
+            accounts,
+        },
+        shimmer: {
+            eid: EndpointId.SHIMMER_V2_MAINNET,
+            url: 'https://json-rpc.evm.shimmer.network',
+            accounts,
+        },
+        rarible: {
+            eid: EndpointId.RARIBLE_V2_MAINNET,
+            url: 'https://mainnet.rpc.rarichain.org/http',
+            accounts,
+        },
+        xai: {
+            eid: EndpointId.XAI_V2_MAINNET,
+            url: 'https://xai-chain.net/rpc',
+            accounts,
+        },
+        fraxtal: {
+            eid: EndpointId.FRAXTAL_V2_MAINNET,
+            url: 'https://rpc.frax.com',
+            accounts,
+        },
+        blast: {
+            eid: EndpointId.BLAST_V2_MAINNET,
+            url: 'https://rpc.blastblockchain.com',
+            accounts,
+        },
+        tiltyard: {
+            eid: EndpointId.TILTYARD_V2_MAINNET,
+            url: 'https://subnets.avax.network/tiltyard/mainnet/rpc',
+            accounts,
+        },
+        mode: {
+            eid: EndpointId.MODE_V2_MAINNET,
+            url: 'https://mainnet.mode.network',
+            accounts,
+        },
+        masa: {
+            eid: EndpointId.MASA_V2_MAINNET,
+            url: 'https://subnets.avax.network/masanetwork/mainnet/rpc',
             accounts,
         },
     },
