@@ -8,6 +8,7 @@ import 'dotenv/config'
 import 'hardhat-deploy'
 import 'hardhat-contract-sizer'
 import '@nomiclabs/hardhat-ethers'
+import "@nomicfoundation/hardhat-verify";
 import '@layerzerolabs/toolbox-hardhat'
 import '@typechain/hardhat'
 import '@nomicfoundation/hardhat-ethers'
@@ -51,6 +52,22 @@ const config: HardhatUserConfig = {
                 },
             },
         ],
+    },
+    etherscan: {
+        apiKey: {
+            mainnet: process.env.ETHERSCAN_API_KEY || '',
+            bnb: process.env.BSCSCAN_API_KEY || '',
+            polygon: process.env.POLYGON_API_KEY || '',
+            avalanche: process.env.AVALANCHE_API_KEY || '',
+            optimisticEthereum: process.env.OPTIMISTIC_API_KEY || '',
+            arbitrumOne: process.env.ARBITRUM_API_KEY || '',
+            arbitrumNova: process.env.ARBITRUM_NOVA_API_KEY || '',
+            metis: process.env.METIS_API_KEY || '',
+            gnosis: process.env.GNOSIS_API_KEY || '',
+            base: process.env.BASE_API_KEY || '',
+            opera: process.env.FANTOM_API_KEY || '',
+            moonbeam: process.env.MOONBEAM_API_KEY || '',
+        } 
     },
     networks: {
         ethereum: {
@@ -194,7 +211,7 @@ const config: HardhatUserConfig = {
             accounts,
         },
         linea: {
-            eid: EndpointId.LIF3_V2_MAINNET,
+            eid: 30183,
             url: 'https://rpc.linea.build',
             accounts,
         },
@@ -285,7 +302,7 @@ const config: HardhatUserConfig = {
         },
         blast: {
             eid: EndpointId.BLAST_V2_MAINNET,
-            url: 'https://rpc.blastblockchain.com',
+            url: 'https://rpc.blast.io',
             accounts,
         },
         tiltyard: {
