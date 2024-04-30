@@ -3,9 +3,9 @@ import assert from 'assert'
 import { type DeployFunction } from 'hardhat-deploy/types'
 
 // TODO declare your contract name here
-const contractName = 'MyOApp'
+const contractName = 'OmniXMultisender'
 
-const deploy: DeployFunction = async (hre) => {
+const deployOmniMultisender: DeployFunction = async (hre) => {
     const { getNamedAccounts, deployments } = hre
 
     const { deploy } = deployments
@@ -36,10 +36,12 @@ const deploy: DeployFunction = async (hre) => {
 
     const { address } = await deploy(contractName, {
         from: deployer,
-        args: [
-            endpointV2Deployment.address, // LayerZero's EndpointV2 address
-            deployer, // owner
-        ],
+        args: [],
+        contract: 'contracts/OmniXMultisender.sol:OmniXMultisender',
+        // args: [
+        //     endpointV2Deployment.address, // LayerZero's EndpointV2 address
+        //     deployer, // owner
+        // ],
         log: true,
         skipIfAlreadyDeployed: false,
     })
@@ -47,6 +49,6 @@ const deploy: DeployFunction = async (hre) => {
     console.log(`Deployed contract: ${contractName}, network: ${hre.network.name}, address: ${address}`)
 }
 
-deploy.tags = [contractName]
+deployOmniMultisender.tags = [contractName]
 
-export default deploy
+export default deployOmniMultisender

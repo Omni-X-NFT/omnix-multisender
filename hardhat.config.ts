@@ -90,7 +90,7 @@ const config: HardhatUserConfig = {
         },
         fantom: {
             eid: EndpointId.FANTOM_V2_MAINNET,
-            url: 'https://fantom.api.onfinality.io/public',
+            url: 'https://rpc.ankr.com/fantom',
             accounts,
         },
         dfk: {
@@ -191,11 +191,6 @@ const config: HardhatUserConfig = {
         mantle: {
             eid: EndpointId.MANTLE_V2_MAINNET,
             url: 'https://mantle.drpc.org',
-            accounts,
-        },
-        hubble: {
-            eid: EndpointId.HUBBLE_V2_MAINNET,
-            url: 'https://rpc.hubble.exchange',
             accounts,
         },
         linea: {

@@ -1,430 +1,430 @@
 import { EndpointId } from '@layerzerolabs/lz-definitions'
 
-const ethereumOmniXMultisenderFactory = {
+const ethereumOmniXMultisender = {
     eid: EndpointId.ETHEREUM_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const baseOmniXMultisenderFactory = {
+const baseOmniXMultisender = {
     eid: EndpointId.BASE_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const arbitrumOmniXMultisenderFactory = {
+const arbitrumOmniXMultisender = {
     eid: EndpointId.ARBITRUM_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const bnbOmniXMultisenderFactory = {
+const bnbOmniXMultisender = {
     eid: EndpointId.BSC_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
-const avalancheOmniXMultisenderFactory = {
+const avalancheOmniXMultisender = {
     eid: EndpointId.AVALANCHE_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const polygonOmniXMultisenderFactory = {
+const polygonOmniXMultisender = {
     eid: EndpointId.POLYGON_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const fantomOmniXMultisenderFactory = {
+const fantomOmniXMultisender = {
     eid: EndpointId.FANTOM_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const dfkOmniXMultisenderFactory = {
+const dfkOmniXMultisender = {
     eid: EndpointId.DFK_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const harmonyOmniXMultisenderFactory = {
+const harmonyOmniXMultisender = {
     eid: EndpointId.HARMONY_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const dexalotOmniXMultisenderFactory = {
+const dexalotOmniXMultisender = {
     eid: EndpointId.DEXALOT_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const celoOmniXMultisenderFactory = {
+const celoOmniXMultisender = {
     eid: EndpointId.CELO_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const moonbeamOmniXMultisenderFactory = {
+const moonbeamOmniXMultisender = {
     eid: EndpointId.MOONBEAM_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const fuseOmniXMultisenderFactory = {
+const fuseOmniXMultisender = {
     eid: EndpointId.FUSE_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
-const gnosisOmniXMultisenderFactory = {
+const gnosisOmniXMultisender = {
     eid: EndpointId.GNOSIS_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
-const dosOmniXMultisenderFactory = {
+const dosOmniXMultisender = {
     eid: EndpointId.DOS_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const klaytnOmniXMultisenderFactory = {
+const klaytnOmniXMultisender = {
     eid: EndpointId.KLAYTN_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const metisOmniXMultisenderFactory = {
+const metisOmniXMultisender = {
     eid: EndpointId.METIS_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const coreOmniXMultisenderFactory = {
+const coreOmniXMultisender = {
     eid: EndpointId.COREDAO_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const okxOmniXMultisenderFactory = {
+const okxOmniXMultisender = {
     eid: EndpointId.OKX_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const cantoOmniXMultisenderFactory = {
+const cantoOmniXMultisender = {
     eid: EndpointId.CANTO_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const zksyncOmniXMultisenderFactory = {
+const zksyncOmniXMultisender = {
     eid: EndpointId.ZKSYNC_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const moonriverOmniXMultisenderFactory = {
+const moonriverOmniXMultisender = {
     eid: EndpointId.MOONRIVER_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const tenetOmniXMultisenderFactory = {
+const tenetOmniXMultisender = {
     eid: EndpointId.TENET_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const arbitrumNovaOmniXMultisenderFactory = {
+const arbitrumNovaOmniXMultisender = {
     eid: EndpointId.NOVA_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const meterOmniXMultisenderFactory = {
+const meterOmniXMultisender = {
     eid: EndpointId.METER_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const kavaOmniXMultisenderFactory = {
+const kavaOmniXMultisender = {
     eid: EndpointId.KAVA_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const mantleOmniXMultisenderFactory = {
+const mantleOmniXMultisender = {
     eid: EndpointId.MANTLE_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const hubbleOmniXMultisenderFactory = {
-    eid: EndpointId.HUBBLE_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
-}
-
-const zoraOmniXMultisenderFactory = {
+const zoraOmniXMultisender = {
     eid: EndpointId.ZORA_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const optimismOmniXMultisenderFactory = {
+const optimismOmniXMultisender = {
     eid: EndpointId.OPTIMISM_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const lineaOmniXMultisenderFactory = {
+const lineaOmniXMultisender = {
     eid: EndpointId.LIF3_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const lootOmniXMultisenderFactory = {
+const lootOmniXMultisender = {
     eid: EndpointId.LOOT_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const meritCircleOmniXMultisenderFactory = {
+const meritCircleOmniXMultisender = {
     eid: EndpointId.MERITCIRCLE_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const telosOmniXMultisenderFactory = {
+const telosOmniXMultisender = {
     eid: EndpointId.TELOS_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const opBNBOmniXMultisenderFactory = {
+const opBNBOmniXMultisender = {
     eid: EndpointId.OPBNB_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const astarOmniXMultisenderFactory = {
+const astarOmniXMultisender = {
     eid: EndpointId.ASTAR_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const auroraOmniXMultisenderFactory = {
+const auroraOmniXMultisender = {
     eid: EndpointId.AURORA_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const confluxOmniXMultisenderFactory = {
+const confluxOmniXMultisender = {
     eid: EndpointId.CONFLUX_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const orderlyOmniXMultisenderFactory = {
+const orderlyOmniXMultisender = {
     eid: EndpointId.ORDERLY_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const scrollOmniXMultisenderFactory = {
+const scrollOmniXMultisender = {
     eid: EndpointId.SCROLL_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const eonOmniXMultisenderFactory = {
+const eonOmniXMultisender = {
     eid: EndpointId.EON_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const xplaOmniXMultisenderFactory = {
+const xplaOmniXMultisender = {
     eid: EndpointId.XPLA_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const mantaOmniXMultisenderFactory = {
+const mantaOmniXMultisender = {
     eid: EndpointId.MANTA_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const shimmerOmniXMultisenderFactory = {
+const shimmerOmniXMultisender = {
     eid: EndpointId.SHIMMER_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const raribleOmniXMultisenderFactory = {
+const raribleOmniXMultisender = {
     eid: EndpointId.RARIBLE_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const xaiOmniXMultisenderFactory = {
+const xaiOmniXMultisender = {
     eid: EndpointId.XAI_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const blastOmniXMultisenderFactory = {
+const blastOmniXMultisender = {
     eid: EndpointId.BLAST_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const tiltyardOmniXMultisenderFactory = {
+const tiltyardOmniXMultisender = {
     eid: EndpointId.TILTYARD_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const modeOmniXMultisenderFactory = {
+const modeOmniXMultisender = {
     eid: EndpointId.MODE_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
 }
 
-const masaOmniXMultisenderFactory = {
+const masaOmniXMultisender = {
     eid: EndpointId.MASA_V2_MAINNET,
-    contractName: 'OmniXMultisenderFactory',
+    contractName: 'OmniXMultisender',
+}
+
+const fraxtalOmniXMultisender = {
+    eid: EndpointId.FRAXTAL_V2_MAINNET,
+    contractName: 'OmniXMultisender',
 }
 
 
 export default {
     contracts: [
         {
-            contract: baseOmniXMultisenderFactory,
+            contract: baseOmniXMultisender,
         },
         {
-            contract: optimismOmniXMultisenderFactory,
+            contract: optimismOmniXMultisender,
         },
         {
-            contract: arbitrumOmniXMultisenderFactory,
+            contract: arbitrumOmniXMultisender,
         },
         {
-            contract: ethereumOmniXMultisenderFactory,
+            contract: ethereumOmniXMultisender,
         },
         {
-            contract: polygonOmniXMultisenderFactory,
+            contract: polygonOmniXMultisender,
         },
         {
-            contract: bnbOmniXMultisenderFactory,
+            contract: bnbOmniXMultisender,
         },
         {
-            contract: avalancheOmniXMultisenderFactory,
+            contract: avalancheOmniXMultisender,
         },
         {
-            contract: fantomOmniXMultisenderFactory,
+            contract: fantomOmniXMultisender,
         },
         {
-            contract: dfkOmniXMultisenderFactory,
+            contract: dfkOmniXMultisender,
         },
         {
-            contract: harmonyOmniXMultisenderFactory,
+            contract: harmonyOmniXMultisender,
         },
         {
-            contract: dexalotOmniXMultisenderFactory,
+            contract: dexalotOmniXMultisender,
         },
         {
-            contract: celoOmniXMultisenderFactory,
+            contract: celoOmniXMultisender,
         },
         {
-            contract: moonbeamOmniXMultisenderFactory,
+            contract: moonbeamOmniXMultisender,
         },
         {
-            contract: fuseOmniXMultisenderFactory,
+            contract: fuseOmniXMultisender,
         },
         {
-            contract: gnosisOmniXMultisenderFactory,
+            contract: gnosisOmniXMultisender,
         },
         {
-            contract: dosOmniXMultisenderFactory,
+            contract: dosOmniXMultisender,
         },
         {
-            contract: klaytnOmniXMultisenderFactory,
+            contract: klaytnOmniXMultisender,
         },
         {
-            contract: metisOmniXMultisenderFactory,
+            contract: metisOmniXMultisender,
         },
         {
-            contract: coreOmniXMultisenderFactory,
+            contract: coreOmniXMultisender,
         },
         {
-            contract: okxOmniXMultisenderFactory,
+            contract: okxOmniXMultisender,
         },
         {
-            contract: cantoOmniXMultisenderFactory,
+            contract: cantoOmniXMultisender,
         },
         {
-            contract: zksyncOmniXMultisenderFactory,
+            contract: zksyncOmniXMultisender,
         },
         {
-            contract: moonriverOmniXMultisenderFactory,
+            contract: moonriverOmniXMultisender,
         },
         {
-            contract: tenetOmniXMultisenderFactory,
+            contract: tenetOmniXMultisender,
         },
         {
-            contract: arbitrumNovaOmniXMultisenderFactory,
+            contract: arbitrumNovaOmniXMultisender,
         },
         {
-            contract: meterOmniXMultisenderFactory,
+            contract: meterOmniXMultisender,
         },
         {
-            contract: kavaOmniXMultisenderFactory,
+            contract: kavaOmniXMultisender,
         },
         {
-            contract: mantleOmniXMultisenderFactory,
+            contract: mantleOmniXMultisender,
         },
         {
-            contract: hubbleOmniXMultisenderFactory,
+            contract: zoraOmniXMultisender,
         },
         {
-            contract: zoraOmniXMultisenderFactory,
+            contract: lineaOmniXMultisender,
         },
         {
-            contract: lineaOmniXMultisenderFactory,
+            contract: lootOmniXMultisender,
         },
         {
-            contract: lootOmniXMultisenderFactory,
+            contract: meritCircleOmniXMultisender,
         },
         {
-            contract: meritCircleOmniXMultisenderFactory,
+            contract: telosOmniXMultisender,
         },
         {
-            contract: telosOmniXMultisenderFactory,
+            contract: opBNBOmniXMultisender,
         },
         {
-            contract: opBNBOmniXMultisenderFactory,
+            contract: astarOmniXMultisender,
         },
         {
-            contract: astarOmniXMultisenderFactory,
+            contract: auroraOmniXMultisender,
         },
         {
-            contract: auroraOmniXMultisenderFactory,
+            contract: confluxOmniXMultisender,
         },
         {
-            contract: confluxOmniXMultisenderFactory,
+            contract: orderlyOmniXMultisender,
         },
         {
-            contract: orderlyOmniXMultisenderFactory,
+            contract: scrollOmniXMultisender,
         },
         {
-            contract: scrollOmniXMultisenderFactory,
+            contract: eonOmniXMultisender,
         },
         {
-            contract: eonOmniXMultisenderFactory,
+            contract: xplaOmniXMultisender,
         },
         {
-            contract: xplaOmniXMultisenderFactory,
+            contract: mantaOmniXMultisender,
         },
         {
-            contract: mantaOmniXMultisenderFactory,
+            contract: shimmerOmniXMultisender,
         },
         {
-            contract: shimmerOmniXMultisenderFactory,
+            contract: raribleOmniXMultisender,
         },
         {
-            contract: raribleOmniXMultisenderFactory,
+            contract: xaiOmniXMultisender,
         },
         {
-            contract: xaiOmniXMultisenderFactory,
+            contract: blastOmniXMultisender,
         },
         {
-            contract: blastOmniXMultisenderFactory,
+            contract: tiltyardOmniXMultisender,
         },
         {
-            contract: tiltyardOmniXMultisenderFactory,
+            contract: modeOmniXMultisender,
         },
         {
-            contract: modeOmniXMultisenderFactory,
+            contract: masaOmniXMultisender,
         },
         {
-            contract: masaOmniXMultisenderFactory,
-        },
+            contract: fraxtalOmniXMultisender
+        }
     ],
     connections: [
         {
-            from: baseOmniXMultisenderFactory,
-            to: optimismOmniXMultisenderFactory,
+            from: baseOmniXMultisender,
+            to: optimismOmniXMultisender,
         },
         {
-            from: baseOmniXMultisenderFactory,
-            to: arbitrumOmniXMultisenderFactory,
+            from: baseOmniXMultisender,
+            to: arbitrumOmniXMultisender,
         },
         {
-            from: optimismOmniXMultisenderFactory,
-            to: baseOmniXMultisenderFactory,
+            from: optimismOmniXMultisender,
+            to: baseOmniXMultisender,
         },
         {
-            from: optimismOmniXMultisenderFactory,
-            to: arbitrumOmniXMultisenderFactory,
+            from: optimismOmniXMultisender,
+            to: arbitrumOmniXMultisender,
         },
         {
-            from: arbitrumOmniXMultisenderFactory,
-            to: optimismOmniXMultisenderFactory,
+            from: arbitrumOmniXMultisender,
+            to: optimismOmniXMultisender,
         },
         {
-            from: arbitrumOmniXMultisenderFactory,
-            to: baseOmniXMultisenderFactory,
+            from: arbitrumOmniXMultisender,
+            to: baseOmniXMultisender,
         },
     ],
 }
