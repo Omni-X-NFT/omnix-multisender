@@ -1,4 +1,4 @@
-export const omniElementAddresses = {
+export const omniElementsAddresses = {
   "ethereum": "0xF6f02e017870859E7265010bb6FfB0664747169F",
   "bnb": "0xfc868F1d35A4A19A707c57519706fb72594176BD",
   "avalanche": "0xF57Fc45434082f9C047e60b4Be779cd405d38527",

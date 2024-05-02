@@ -3,26 +3,25 @@ import { HardhatRuntimeEnvironment, TaskArguments } from 'hardhat/types'
 
 import { EndpointId } from '@layerzerolabs/lz-definitions'
 
-import { generateOptions } from '../options/'
-import { OmniMultisender, OmniMultisender__factory } from '../typechain-types'
+// import { generateOptions } from '../options/'
+import { OmniXMultisender, OmniXMultisender__factory } from '../typechain-types'
 
 task(`multisend`, 'multisend funds with fixed native on destination chain')
-    // .addParam(`multisendAddress`, `The address of the OmniMultisend contract `)
     .setAction(async (taskArguments: TaskArguments, hre: HardhatRuntimeEnvironment) => {
-        const { ethers } = hre
+        const { ethers, network } = hre
         // const { multisendAddress } = taskArguments
         const [owner] = await ethers.getSigners()
         //list of destination ids
-        const deis = [EndpointId.ARBITRUM_V2_MAINNET, EndpointId.BASE_V2_MAINNET]
+        const deis = [EndpointId.MERITCIRCLE_V2_MAINNET, EndpointId.BASE_V2_MAINNET]
 
         // connect to an instance of OmniMultisender on Optimism
-        const omniMultisender: OmniMultisender = OmniMultisender__factory.connect(
-            '0x6071064D100fF1540Ea4D8FA665510ee982238F9',
+        const omniMultisender: OmniXMultisender = OmniXMultisender__factory.connect(
+            '0x559Ac215767928ca3c8A8a67a717bcC578CBAA01',
             owner
         )
 
-        const input = generateOptions(owner.address, deis)
-        const tx = await omniMultisender.multiSend(input.dstEids, input.options)
-        console.log(`Multisend complete.`)
-        console.log(tx)
+        // const input = generateOptions(owner.address, deis)
+        const tx = await omniMultisender[`sendDeposits(uint32[],uint128[])`].send(deis,[100000000,100000000])
+        console.log(`Multisend on ${network.name} complete.`)
+        console.log(tx.hash)
     })

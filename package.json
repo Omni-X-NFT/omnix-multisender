@@ -1,6 +1,6 @@
 {
   "name": "@omni-x-nft/omnix-multisender",
-  "version": "0.1.3",
+  "version": "0.1.0",
   "private": true,
   "license": "MIT",
   "scripts": {
