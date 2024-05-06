@@ -53,6 +53,9 @@ const config: HardhatUserConfig = {
             },
         ],
     },
+    sourcify : {
+        enabled: false
+    },
     etherscan: {
         apiKey: {
             mainnet: process.env.ETHERSCAN_API_KEY || '',
@@ -61,13 +64,41 @@ const config: HardhatUserConfig = {
             avalanche: process.env.AVALANCHE_API_KEY || '',
             optimisticEthereum: process.env.OPTIMISTIC_API_KEY || '',
             arbitrumOne: process.env.ARBITRUM_API_KEY || '',
-            arbitrumNova: process.env.ARBITRUM_NOVA_API_KEY || '',
+            nova: process.env.ARBITRUM_NOVA_API_KEY || '',
             metis: process.env.METIS_API_KEY || '',
             gnosis: process.env.GNOSIS_API_KEY || '',
             base: process.env.BASE_API_KEY || '',
             opera: process.env.FANTOM_API_KEY || '',
             moonbeam: process.env.MOONBEAM_API_KEY || '',
-        } 
+            celo: process.env.CELO_API_KEY || '',
+            zora: "zora",
+        },
+        customChains: [
+            {
+                network: 'nova',
+                chainId: 42170,
+                urls: {
+                  apiURL: 'https://arbitrum-nova-rpc.publicnode.com',
+                  browserURL: 'https://nova.arbiscan.io/'
+                }
+              },
+              {
+                network: "celo",
+                chainId: 42220,
+                urls: {
+                    apiURL: "https://api.celoscan.io/api",
+                    browserURL: "https://celoscan.io/",
+                },
+            },
+              {
+                network: "zora",
+                chainId: 7777777,
+                urls: {
+                  apiURL: "https://api.routescan.io/v2/network/mainnet/evm/7777777/etherscan",
+                  browserURL: "https://zorascan.xyz"
+                }
+              }
+        ]
     },
     networks: {
         ethereum: {

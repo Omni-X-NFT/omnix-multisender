@@ -21,6 +21,8 @@ task(`multisend`, 'multisend funds with fixed native on destination chain')
         )
 
         // const input = generateOptions(owner.address, deis)
+        //note that this code is meant for testing purposes only
+        // in production you MUST implement a read call to estimateFees first so the users do not pass more value than needed
         const tx = await omniMultisender[`sendDeposits(uint32[],uint128[])`].send(deis,[100000000,100000000])
         console.log(`Multisend on ${network.name} complete.`)
         console.log(tx.hash)
