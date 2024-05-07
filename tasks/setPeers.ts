@@ -62,7 +62,7 @@ task(`setPeers`, 'setPeers for a Multisender contract. used for connecting insta
         console.log(remoteEids)
         console.log(remoteDeploymentAddresses)
         try {
-          const tx = await omniXMultisenderFactory.setPeers(omniXMultisenderCloneAddress, remoteEids, remoteDeploymentAddresses)
+          const tx = await omniXMultisenderFactory.setPeers(omniXMultisenderCloneAddress, remoteEids, remoteDeploymentAddresses, {gasLimit: 200000})
           console.log (`Successfully set peers for ${omniXMultisenderCloneAddress} on ${network.name} ${tx.hash}`)
         } catch (error) {
           console.error(error)
