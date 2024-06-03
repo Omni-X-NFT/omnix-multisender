@@ -227,16 +227,14 @@ contract OmniXMultisender is Initializable, Clone {
         bytes[] calldata messages,
         bytes[] calldata options
     ) external view virtual returns (uint256[] memory nativeFees) {
-        unchecked {
-            nativeFees = new uint256[](dstEids.length);
-            for (uint256 i; i < dstEids.length; ++i) {
-                nativeFees[i] = endpoint().quote(
-                    MessagingParams(
-                        dstEids[i], _getPeer(dstEids[i]), messages[i], options[i], false
-                    ),
-                    address(this)
-                ).nativeFee;
-            }
+        nativeFees = new uint256[](dstEids.length);
+        for (uint256 i; i < dstEids.length; ++i) {
+            nativeFees[i] = endpoint().quote(
+                MessagingParams(
+                    dstEids[i], _getPeer(dstEids[i]), messages[i], options[i], false
+                ),
+                address(this)
+            ).nativeFee;
         }
     }
 
