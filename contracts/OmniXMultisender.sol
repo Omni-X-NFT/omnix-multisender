@@ -227,6 +227,11 @@ contract OmniXMultisender is Initializable, Clone {
         bytes[] calldata messages,
         bytes[] calldata options
     ) external view virtual returns (uint256[] memory nativeFees) {
+        require(
+            dstEids.length == messages.length && messages.length == options.length,
+            "OmniXMultisender: Input arrays must have the same length"
+        );
+
         nativeFees = new uint256[](dstEids.length);
         for (uint256 i; i < dstEids.length; ++i) {
             nativeFees[i] = endpoint().quote(
