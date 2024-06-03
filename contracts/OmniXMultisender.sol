@@ -286,7 +286,7 @@ contract OmniXMultisender is Initializable, Clone {
             FixedPointMathLib.mulDiv(100, omniBalance > 5 ? 5 : omniBalance, 5);
 
         uint256 nativeAmount = FixedPointMathLib.mulDiv(
-            msg.value, BIPS_DIVISOR - 100 + discountBips + 1, BIPS_DIVISOR
+            msg.value, BIPS_DIVISOR - 100 + discountBips, BIPS_DIVISOR
         );
 
         for (uint256 i; i < dstEids.length;) {
