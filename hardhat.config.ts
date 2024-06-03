@@ -103,7 +103,7 @@ const config: HardhatUserConfig = {
     networks: {
         ethereum: {
             eid: EndpointId.ETHEREUM_V2_MAINNET,
-            url: 'https://eth.llamarpc.com',
+            url: 'https://ethereum-rpc.publicnode.com',
             accounts, 
         },
         base: {
@@ -113,7 +113,7 @@ const config: HardhatUserConfig = {
         },
         optimism: {
             eid: EndpointId.OPTIMISM_V2_MAINNET,
-            url: 'https://optimism.llamarpc.com',
+            url: 'https://optimism-rpc.publicnode.com',
             accounts,
         },
         arbitrum: {
