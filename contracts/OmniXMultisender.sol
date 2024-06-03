@@ -105,28 +105,6 @@ contract OmniXMultisender is Initializable, Clone {
         _sendDeposits(dstEids, amounts, to);
     }
 
-    function sendMessages(uint32[] calldata dstEids, bytes[] calldata messages)
-        external
-        payable
-        virtual
-    {
-        uint256 fee;
-        for (uint256 i; i < messages.length;) {
-            fee += _lzSend(
-                dstEids[i],
-                messages[i],
-                _createReceiveOption(dstEids[i]),
-                address(this).balance,
-                address(this)
-            ).fee.nativeFee;
-
-            unchecked {
-                ++i;
-            }
-        }
-        if (fee > msg.value) revert InsufficientNativeValue();
-    }
-
     function withdraw(address token) external virtual {
         if (token == address(0)) SafeTransferLib.safeTransferAllETH(factory());
         else SafeTransferLib.safeTransferAll(token, factory());
@@ -204,22 +182,13 @@ contract OmniXMultisender is Initializable, Clone {
     /// Read-Only Helpers
     /// -----------------------------------------------------------------------
 
-    function createReceiveOption(uint32 dstEid)
+    function createSendDepositOption(uint32 dstEid, uint128 amount, address to)
         external
         view
         virtual
         returns (bytes memory)
     {
-        return _createReceiveOption(dstEid);
-    }
-
-    function createNativeDropOption(uint32 dstEid, uint128 amount, address to)
-        external
-        view
-        virtual
-        returns (bytes memory)
-    {
-        return _createNativeDropOption(dstEid, amount, to);
+        return _createSendDepositOption(dstEid, amount, to);
     }
 
     function estimateFees(
@@ -244,33 +213,23 @@ contract OmniXMultisender is Initializable, Clone {
     /// Internal Helpers
     /// -----------------------------------------------------------------------
 
-    function _createReceiveOption(uint32 dstEid)
+    function _createSendDepositOption(uint32 dstEid, uint128 amount, address to)
         internal
         view
         virtual
         returns (bytes memory)
     {
         return abi.encodePacked(
-            abi.encodePacked(uint16(3)),
+            uint16(3), // unrolled _createReceiveOption(dstEid) start
             uint8(1),
             uint16(16 + 1),
             uint8(1),
-            abi.encodePacked(_getGasLimit(dstEid))
-        );
-    }
-
-    function _createNativeDropOption(uint32 dstEid, uint128 amount, address to)
-        internal
-        view
-        virtual
-        returns (bytes memory)
-    {
-        return abi.encodePacked(
-            _createReceiveOption(dstEid),
+            _getGasLimit(dstEid), // unrolled _createReceiveOption end
             uint8(1),
             uint16(32 + 16 + 1),
             uint8(2),
-            abi.encodePacked(amount, bytes32(uint256(uint160(to))))
+            amount, 
+            bytes32(uint256(uint160(to)))
         );
     }
 
@@ -293,7 +252,7 @@ contract OmniXMultisender is Initializable, Clone {
             fee += _lzSend(
                 dstEids[i],
                 "",
-                _createNativeDropOption(dstEids[i], amounts[i], to),
+                _createSendDepositOption(dstEids[i], amounts[i], to),
                 address(this).balance,
                 address(this)
             ).fee.nativeFee;
