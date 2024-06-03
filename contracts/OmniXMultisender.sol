@@ -105,28 +105,6 @@ contract OmniXMultisender is Initializable, Clone {
         _sendDeposits(dstEids, amounts, to);
     }
 
-    function sendMessages(uint32[] calldata dstEids, bytes[] calldata messages)
-        external
-        payable
-        virtual
-    {
-        uint256 fee;
-        for (uint256 i; i < messages.length;) {
-            fee += _lzSend(
-                dstEids[i],
-                messages[i],
-                _createReceiveOption(dstEids[i]),
-                address(this).balance,
-                address(this)
-            ).fee.nativeFee;
-
-            unchecked {
-                ++i;
-            }
-        }
-        if (fee > msg.value) revert InsufficientNativeValue();
-    }
-
     function withdraw(address token) external virtual {
         if (token == address(0)) SafeTransferLib.safeTransferAllETH(factory());
         else SafeTransferLib.safeTransferAll(token, factory());
