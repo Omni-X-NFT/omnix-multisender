@@ -28,10 +28,6 @@ import { Initializable } from "solady/src/utils/Initializable.sol";
 import { SafeTransferLib } from "solady/src/utils/SafeTransferLib.sol";
 import { FixedPointMathLib } from "solady/src/utils/FixedPointMathLib.sol";
 
-interface IERC721 {
-    function balanceOf(address owner) external view returns (uint256 result);
-}
-
 /// @title OmniXMultisender
 contract OmniXMultisender is Initializable, Clone, Ownable {
     /// -----------------------------------------------------------------------
@@ -225,16 +221,19 @@ contract OmniXMultisender is Initializable, Clone, Ownable {
         bytes[] calldata messages,
         bytes[] calldata options
     ) external view virtual returns (uint256[] memory nativeFees) {
-        unchecked {
-            nativeFees = new uint256[](dstEids.length);
-            for (uint256 i; i < dstEids.length; ++i) {
-                nativeFees[i] = endpoint().quote(
-                    MessagingParams(
-                        dstEids[i], _getPeer(dstEids[i]), messages[i], options[i], false
-                    ),
-                    address(this)
-                ).nativeFee;
-            }
+        require(
+            dstEids.length == messages.length && messages.length == options.length,
+            "OmniXMultisender.estimateFees: Input arrays must have the same length"
+        );
+
+        nativeFees = new uint256[](dstEids.length);
+        for (uint256 i; i < dstEids.length; ++i) {
+            nativeFees[i] = endpoint().quote(
+                MessagingParams(
+                    dstEids[i], _getPeer(dstEids[i]), messages[i], options[i], false
+                ),
+                address(this)
+            ).nativeFee;
         }
     }
 
@@ -277,6 +276,11 @@ contract OmniXMultisender is Initializable, Clone, Ownable {
         uint128[] calldata amounts,
         address to
     ) internal virtual {
+        require(
+            dstEids.length == amounts.length,
+            "OmniXMultisender._sendDeposits: Input arrays must have the same length"
+        );
+        
         uint256 fee;
         uint256 omniBalance =
             omniNft() == address(0) ? 0 : SafeTransferLib.balanceOf(omniNft(), msg.sender);
@@ -318,7 +322,7 @@ contract OmniXMultisender is Initializable, Clone, Ownable {
 
     function _getPeer(uint32 _dstEid) internal view returns (bytes32) {
         bytes32 trustedRemote = peers[_dstEid];
-        if (trustedRemote == 0) return bytes32(uint256(uint160(address(this))));
+        if (trustedRemote == 0) revert();
         else return trustedRemote;
     }
 

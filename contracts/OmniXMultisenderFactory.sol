@@ -7,7 +7,7 @@ import { SafeTransferLib } from "solady/src/utils/SafeTransferLib.sol";
 
 import { Ownable } from "solady/src/auth/Ownable.sol";
 
-interface OmniXMultisender {
+interface IOmniXMultisender {
     function initialize() external;
     function setPeers(uint32[] calldata remoteEids, bytes32[] calldata remoteAddresses)
         external;
@@ -52,7 +52,7 @@ contract OmniXMultisenderFactory is Ownable {
             abi.encodePacked(endpoint, address(this), omniNft, defaultGasLimit)
         );
 
-        OmniXMultisender(instance).initialize();
+        IOmniXMultisender(instance).initialize();
     }
 
     function setPeers(
@@ -60,7 +60,7 @@ contract OmniXMultisenderFactory is Ownable {
         uint32[] calldata remoteEids,
         bytes32[] calldata remoteAddresses
     ) external virtual onlyOwner {
-        OmniXMultisender(instance).setPeers(remoteEids, remoteAddresses);
+        IOmniXMultisender(instance).setPeers(remoteEids, remoteAddresses);
     }
 
     function setGasLimit(
@@ -68,7 +68,7 @@ contract OmniXMultisenderFactory is Ownable {
         uint32[] calldata remoteEids,
         uint128[] calldata gasLimits
     ) external virtual onlyOwner {
-        OmniXMultisender(instance).setGasLimit(remoteEids, gasLimits);
+        IOmniXMultisender(instance).setGasLimit(remoteEids, gasLimits);
     }
 
     function setUlnConfigs(
@@ -78,7 +78,7 @@ contract OmniXMultisenderFactory is Ownable {
         uint32[] calldata eids,
         address dvn
     ) external virtual onlyOwner {
-        OmniXMultisender(instance).setUlnConfigs(lib, confirmations, eids, dvn);
+        IOmniXMultisender(instance).setUlnConfigs(lib, confirmations, eids, dvn);
     }
 
     function withdraw(address token, address to) external virtual onlyOwner {
