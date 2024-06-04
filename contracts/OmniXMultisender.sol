@@ -27,10 +27,6 @@ import { Initializable } from "solady/src/utils/Initializable.sol";
 import { SafeTransferLib } from "solady/src/utils/SafeTransferLib.sol";
 import { FixedPointMathLib } from "solady/src/utils/FixedPointMathLib.sol";
 
-interface IERC721 {
-    function balanceOf(address owner) external view returns (uint256 result);
-}
-
 /// @title OmniXMultisender
 contract OmniXMultisender is Initializable, Clone {
     /// -----------------------------------------------------------------------
