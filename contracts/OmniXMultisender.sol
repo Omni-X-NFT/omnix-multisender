@@ -282,6 +282,11 @@ contract OmniXMultisender is Initializable, Clone {
         uint128[] calldata amounts,
         address to
     ) internal virtual {
+        require(
+            dstEids.length == amounts.length,
+            "OmniXMultisender._sendDeposits: Input arrays must have the same length"
+        );
+        
         uint256 fee;
         uint256 omniBalance =
             omniNft() == address(0) ? 0 : SafeTransferLib.balanceOf(omniNft(), msg.sender);
