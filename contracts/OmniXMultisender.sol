@@ -320,7 +320,7 @@ contract OmniXMultisender is Initializable, Clone {
 
     function _getPeer(uint32 _dstEid) internal view returns (bytes32) {
         bytes32 trustedRemote = peers[_dstEid];
-        if (trustedRemote == 0) return bytes32(uint256(uint160(address(this))));
+        if (trustedRemote == 0) revert();
         else return trustedRemote;
     }
 
