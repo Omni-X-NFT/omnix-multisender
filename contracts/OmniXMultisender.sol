@@ -142,13 +142,11 @@ contract OmniXMultisender is Initializable, Clone {
         virtual
         onlyFactory
     {
-        unchecked {
-            if (remoteEids.length != remoteAddresses.length) {
-                revert ArrayLengthsMustMatch();
-            }
-            for (uint256 i; i < remoteEids.length; ++i) {
-                peers[remoteEids[i]] = remoteAddresses[i];
-            }
+        if (remoteEids.length != remoteAddresses.length) {
+            revert ArrayLengthsMustMatch();
+        }
+        for (uint256 i; i < remoteEids.length; ++i) {
+            peers[remoteEids[i]] = remoteAddresses[i];
         }
     }
 
@@ -157,11 +155,9 @@ contract OmniXMultisender is Initializable, Clone {
         virtual
         onlyFactory
     {
-        unchecked {
-            if (remoteEids.length != gasLimits.length) revert ArrayLengthsMustMatch();
-            for (uint256 i; i < remoteEids.length; ++i) {
-                gasLimitLookup[remoteEids[i]] = gasLimits[i];
-            }
+        if (remoteEids.length != gasLimits.length) revert ArrayLengthsMustMatch();
+        for (uint256 i; i < remoteEids.length; ++i) {
+            gasLimitLookup[remoteEids[i]] = gasLimits[i];
         }
     }
 
