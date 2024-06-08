@@ -171,6 +171,9 @@ contract OmniXMultisender is Initializable, Clone {
         uint32[] calldata eids,
         address dvn
     ) external virtual onlyFactory {
+        if (lib == address(0) || dvn == address(0))
+            revert("OmniXMultisender.setUlnConfigs: Either lib or dvn passed address is 0.");
+
         SetConfigParam[] memory configs = new SetConfigParam[](eids.length);
 
         for (uint256 i; i < eids.length;) {
