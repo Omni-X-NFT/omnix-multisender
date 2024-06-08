@@ -23,19 +23,18 @@ import {
 
 import { Clone } from "solady/src/utils/Clone.sol";
 import { LibZip } from "solady/src/utils/LibZip.sol";
+import { Ownable } from "solady/src/auth/Ownable.sol";
 import { Initializable } from "solady/src/utils/Initializable.sol";
 import { SafeTransferLib } from "solady/src/utils/SafeTransferLib.sol";
 import { FixedPointMathLib } from "solady/src/utils/FixedPointMathLib.sol";
 
 /// @title OmniXMultisender
-contract OmniXMultisender is Initializable, Clone {
+contract OmniXMultisender is Initializable, Clone, Ownable {
     /// -----------------------------------------------------------------------
     /// Custom Errors
     /// -----------------------------------------------------------------------
 
     error InsufficientNativeValue(); // 0x35898e6e
-
-    error Unauthorized(); // 0x82b42900
 
     error ArrayLengthsMustMatch(); // 0x587543d1
 
@@ -71,14 +70,6 @@ contract OmniXMultisender is Initializable, Clone {
 
     function defaultGasLimit() public pure virtual returns (uint128) {
         return _getArgUint24(0x3c);
-    }
-
-    /// -----------------------------------------------------------------------
-    /// Initialization
-    /// -----------------------------------------------------------------------
-
-    function initialize() external virtual initializer {
-        endpoint().setDelegate(factory());
     }
 
     /// -----------------------------------------------------------------------
@@ -139,7 +130,7 @@ contract OmniXMultisender is Initializable, Clone {
         }
     }
 
-    function setDelegate(address delegate) external virtual onlyFactory {
+    function setDelegate(address delegate) external virtual onlyOwner {
         endpoint().setDelegate(delegate);
     }
 

@@ -13,7 +13,6 @@ interface IOmniXMultisender {
         external;
     function setGasLimit(uint32[] calldata remoteEids, uint128[] calldata gasLimits)
         external;
-    function setDelegate(address delegate) external;
     function setUlnConfigs(
         address lib,
         uint64 confirmations,
@@ -70,10 +69,6 @@ contract OmniXMultisenderFactory is Ownable {
         uint128[] calldata gasLimits
     ) external virtual onlyOwner {
         IOmniXMultisender(instance).setGasLimit(remoteEids, gasLimits);
-    }
-
-    function setDelegate(address instance, address delegate) external virtual onlyOwner {
-        IOmniXMultisender(instance).setDelegate(delegate);
     }
 
     function setUlnConfigs(
