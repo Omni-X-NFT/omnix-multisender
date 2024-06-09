@@ -43,6 +43,7 @@ contract OmniXMultisender is Initializable, Ownable {
     
     address internal immutable endpointAddress;
     address internal immutable omniNftAddress;
+    //@dev This gas limit value will be used unless a function specifies the value explicitly or it has been set in gasLimitLookeup by the owner
     uint24 internal immutable defaultGasLimit = 10000;
     uint256 internal constant BIPS_DIVISOR = 10_000;
 
@@ -67,20 +68,21 @@ contract OmniXMultisender is Initializable, Ownable {
     /// Actions
     /// -----------------------------------------------------------------------
 
-    function sendDeposits(uint32[] calldata dstEids, uint128[] calldata amounts)
+    function sendDeposits(uint32[] calldata dstEids, uint128[] calldata amounts, uint24 customGasLimit)
         external
         payable
         virtual
     {
-        _sendDeposits(dstEids, amounts, msg.sender);
+        _sendDeposits(dstEids, amounts, msg.sender, customGasLimit);
     }
 
     function sendDeposits(
         uint32[] calldata dstEids,
         uint128[] calldata amounts,
-        address to
+        address to,
+        uint24 customGasLimit
     ) external payable virtual {
-        _sendDeposits(dstEids, amounts, to);
+        _sendDeposits(dstEids, amounts, to, customGasLimit);
     }
 
     /// -----------------------------------------------------------------------
@@ -154,13 +156,13 @@ contract OmniXMultisender is Initializable, Ownable {
     /// Read-Only Helpers
     /// -----------------------------------------------------------------------
 
-    function createSendDepositOption(uint32 dstEid, uint128 amount, address to)
+    function createSendDepositOption(uint32 dstEid, uint128 amount, address to, uint24 customGasLimit)
         external
         view
         virtual
         returns (bytes memory)
     {
-        return _createSendDepositOption(dstEid, amount, to);
+        return _createSendDepositOption(dstEid, amount, to, customGasLimit);
     }
 
     function estimateFees(
@@ -185,7 +187,7 @@ contract OmniXMultisender is Initializable, Ownable {
     /// Internal Helpers
     /// -----------------------------------------------------------------------
 
-    function _createSendDepositOption(uint32 dstEid, uint128 amount, address to)
+    function _createSendDepositOption(uint32 dstEid, uint128 amount, address to, uint24 customGasLimit)
         internal
         view
         virtual
@@ -196,7 +198,7 @@ contract OmniXMultisender is Initializable, Ownable {
             uint8(1),
             uint16(16 + 1),
             uint8(1),
-            _getGasLimit(dstEid), // unrolled _createReceiveOption end
+            _getGasLimit(dstEid, customGasLimit), // unrolled _createReceiveOption end
             uint8(1),
             uint16(32 + 16 + 1),
             uint8(2),
@@ -208,7 +210,8 @@ contract OmniXMultisender is Initializable, Ownable {
     function _sendDeposits(
         uint32[] calldata dstEids,
         uint128[] calldata amounts,
-        address to
+        address to,
+        uint24 customGasLimit
     ) internal virtual {
         if (dstEids.length != amounts.length) revert ArrayLengthsMustMatch();
         
@@ -226,7 +229,7 @@ contract OmniXMultisender is Initializable, Ownable {
             fee += _lzSend(
                 dstEids[i],
                 "",
-                _createSendDepositOption(dstEids[i], amounts[i], to),
+                _createSendDepositOption(dstEids[i], amounts[i], to, customGasLimit),
                 address(this).balance,
                 address(this)
             ).fee.nativeFee;
@@ -257,7 +260,8 @@ contract OmniXMultisender is Initializable, Ownable {
         else return trustedRemote;
     }
 
-    function _getGasLimit(uint32 _dstEid) internal view returns (uint128) {
+    function _getGasLimit(uint32 _dstEid, uint24 _customGasLimit) internal view returns (uint128) {
+        if (_customGasLimit != 0) return _customGasLimit;
         uint128 gasLimit = gasLimitLookup[_dstEid];
         if (gasLimit == 0) return defaultGasLimit;
         else return gasLimit;
