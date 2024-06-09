@@ -23,11 +23,12 @@ import {
 
 import { LibZip } from "solady/src/utils/LibZip.sol";
 import { Ownable } from "solady/src/auth/Ownable.sol";
+import { Initializable } from "solady/src/utils/Initializable.sol";
 import { SafeTransferLib } from "solady/src/utils/SafeTransferLib.sol";
 import { FixedPointMathLib } from "solady/src/utils/FixedPointMathLib.sol";
 
 /// @title OmniXMultisender
-contract OmniXMultisender is Ownable {
+contract OmniXMultisender is Initializable, Ownable {
     /// -----------------------------------------------------------------------
     /// Custom Errors
     /// -----------------------------------------------------------------------
@@ -56,20 +57,15 @@ contract OmniXMultisender is Ownable {
 
     address internal immutable endpointAddress;
     address internal immutable omniNftAddress;
-    uint24 internal immutable defaultGasLimit;
+    uint24 internal immutable defaultGasLimit = 10000;
+
+    constructor (address _endpointAddress, address _omniNftAddress) payable {
+        endpointAddress = _endpointAddress;
+        omniNftAddress = _omniNftAddress;
+    }
 
     function endpoint() public view virtual returns (ILayerZeroEndpointV2) {
         return ILayerZeroEndpointV2(endpointAddress);
-    }
-
-    /// -----------------------------------------------------------------------
-    /// Constructor
-    /// -----------------------------------------------------------------------
-
-    constructor (address _endpointAddress, address _omniNftAddress, uint24 _defaultGasLimit) payable {
-        endpointAddress = _endpointAddress;
-        omniNftAddress = _omniNftAddress;
-        defaultGasLimit = _defaultGasLimit;
     }
 
     /// -----------------------------------------------------------------------
@@ -92,28 +88,6 @@ contract OmniXMultisender is Ownable {
         _sendDeposits(dstEids, amounts, to);
     }
 
-    function sendMessages(uint32[] calldata dstEids, bytes[] calldata messages)
-        external
-        payable
-        virtual
-    {
-        uint256 fee;
-        for (uint256 i; i < messages.length;) {
-            fee += _lzSend(
-                dstEids[i],
-                messages[i],
-                _createReceiveOption(dstEids[i]),
-                address(this).balance,
-                address(this)
-            ).fee.nativeFee;
-
-            unchecked {
-                ++i;
-            }
-        }
-        if (fee > msg.value) revert InsufficientNativeValue();
-    }
-
     /// -----------------------------------------------------------------------
     /// Only-Owner Logic
     /// -----------------------------------------------------------------------
@@ -128,13 +102,11 @@ contract OmniXMultisender is Ownable {
         virtual
         onlyOwner
     {
-        unchecked {
-            if (remoteEids.length != remoteAddresses.length) {
-                revert ArrayLengthsMustMatch();
-            }
-            for (uint256 i; i < remoteEids.length; ++i) {
-                peers[remoteEids[i]] = remoteAddresses[i];
-            }
+        if (remoteEids.length != remoteAddresses.length) {
+            revert ArrayLengthsMustMatch();
+        }
+        for (uint256 i; i < remoteEids.length; ++i) {
+            peers[remoteEids[i]] = remoteAddresses[i];
         }
     }
 
@@ -143,11 +115,9 @@ contract OmniXMultisender is Ownable {
         virtual
         onlyOwner
     {
-        unchecked {
-            if (remoteEids.length != gasLimits.length) revert ArrayLengthsMustMatch();
-            for (uint256 i; i < remoteEids.length; ++i) {
-                gasLimitLookup[remoteEids[i]] = gasLimits[i];
-            }
+        if (remoteEids.length != gasLimits.length) revert ArrayLengthsMustMatch();
+        for (uint256 i; i < remoteEids.length; ++i) {
+            gasLimitLookup[remoteEids[i]] = gasLimits[i];
         }
     }
 
@@ -161,6 +131,9 @@ contract OmniXMultisender is Ownable {
         uint32[] calldata eids,
         address dvn
     ) external virtual onlyOwner {
+        if (lib == address(0) || dvn == address(0))
+            revert("OmniXMultisender.setUlnConfigs: Either lib or dvn passed address is 0.");
+
         SetConfigParam[] memory configs = new SetConfigParam[](eids.length);
 
         for (uint256 i; i < eids.length;) {
@@ -186,22 +159,13 @@ contract OmniXMultisender is Ownable {
     /// Read-Only Helpers
     /// -----------------------------------------------------------------------
 
-    function createReceiveOption(uint32 dstEid)
+    function createSendDepositOption(uint32 dstEid, uint128 amount, address to)
         external
         view
         virtual
         returns (bytes memory)
     {
-        return _createReceiveOption(dstEid);
-    }
-
-    function createNativeDropOption(uint32 dstEid, uint128 amount, address to)
-        external
-        view
-        virtual
-        returns (bytes memory)
-    {
-        return _createNativeDropOption(dstEid, amount, to);
+        return _createSendDepositOption(dstEid, amount, to);
     }
 
     function estimateFees(
@@ -229,33 +193,23 @@ contract OmniXMultisender is Ownable {
     /// Internal Helpers
     /// -----------------------------------------------------------------------
 
-    function _createReceiveOption(uint32 dstEid)
+    function _createSendDepositOption(uint32 dstEid, uint128 amount, address to)
         internal
         view
         virtual
         returns (bytes memory)
     {
         return abi.encodePacked(
-            abi.encodePacked(uint16(3)),
+            uint16(3), // unrolled _createReceiveOption(dstEid) start
             uint8(1),
             uint16(16 + 1),
             uint8(1),
-            abi.encodePacked(_getGasLimit(dstEid))
-        );
-    }
-
-    function _createNativeDropOption(uint32 dstEid, uint128 amount, address to)
-        internal
-        view
-        virtual
-        returns (bytes memory)
-    {
-        return abi.encodePacked(
-            _createReceiveOption(dstEid),
+            _getGasLimit(dstEid), // unrolled _createReceiveOption end
             uint8(1),
             uint16(32 + 16 + 1),
             uint8(2),
-            abi.encodePacked(amount, bytes32(uint256(uint160(to))))
+            amount, 
+            bytes32(uint256(uint160(to)))
         );
     }
 
@@ -283,7 +237,7 @@ contract OmniXMultisender is Ownable {
             fee += _lzSend(
                 dstEids[i],
                 "",
-                _createNativeDropOption(dstEids[i], amounts[i], to),
+                _createSendDepositOption(dstEids[i], amounts[i], to),
                 address(this).balance,
                 address(this)
             ).fee.nativeFee;
