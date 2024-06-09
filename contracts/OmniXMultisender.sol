@@ -21,7 +21,6 @@ import {
     SetConfigParam
 } from "@layerzerolabs/lz-evm-protocol-v2/contracts/interfaces/IMessageLibManager.sol";
 
-import { Clone } from "solady/src/utils/Clone.sol";
 import { LibZip } from "solady/src/utils/LibZip.sol";
 import { Ownable } from "solady/src/auth/Ownable.sol";
 import { Initializable } from "solady/src/utils/Initializable.sol";
@@ -29,7 +28,7 @@ import { SafeTransferLib } from "solady/src/utils/SafeTransferLib.sol";
 import { FixedPointMathLib } from "solady/src/utils/FixedPointMathLib.sol";
 
 /// @title OmniXMultisender
-contract OmniXMultisender is Initializable, Clone, Ownable {
+contract OmniXMultisender is Initializable, Ownable {
     /// -----------------------------------------------------------------------
     /// Custom Errors
     /// -----------------------------------------------------------------------
@@ -56,20 +55,17 @@ contract OmniXMultisender is Initializable, Clone, Ownable {
     /// Constants
     /// -----------------------------------------------------------------------
 
-    function endpoint() public pure virtual returns (ILayerZeroEndpointV2) {
-        return ILayerZeroEndpointV2(_getArgAddress(0x00));
+    address internal immutable endpointAddress;
+    address internal immutable omniNftAddress;
+    uint24 internal immutable defaultGasLimit = 10000;
+
+    constructor (address _endpointAddress, address _omniNftAddress) payable {
+        endpointAddress = _endpointAddress;
+        omniNftAddress = _omniNftAddress;
     }
 
-    function factory() public pure virtual returns (address) {
-        return _getArgAddress(0x14);
-    }
-
-    function omniNft() public pure virtual returns (address) {
-        return _getArgAddress(0x28);
-    }
-
-    function defaultGasLimit() public pure virtual returns (uint128) {
-        return _getArgUint24(0x3c);
+    function endpoint() public view virtual returns (ILayerZeroEndpointV2) {
+        return ILayerZeroEndpointV2(endpointAddress);
     }
 
     /// -----------------------------------------------------------------------
@@ -92,24 +88,19 @@ contract OmniXMultisender is Initializable, Clone, Ownable {
         _sendDeposits(dstEids, amounts, to);
     }
 
-    function withdraw(address token) external virtual {
-        if (token == address(0)) SafeTransferLib.safeTransferAllETH(factory());
-        else SafeTransferLib.safeTransferAll(token, factory());
-    }
-
     /// -----------------------------------------------------------------------
-    /// Only-Factory Logic
+    /// Only-Owner Logic
     /// -----------------------------------------------------------------------
 
-    modifier onlyFactory() virtual {
-        if (msg.sender != factory()) revert Unauthorized();
-        _;
+    function withdraw(address token, address to) external virtual onlyOwner {
+        if (token == address(0)) SafeTransferLib.safeTransferAllETH(to);
+        else SafeTransferLib.safeTransferAll(token, to);
     }
 
     function setPeers(uint32[] calldata remoteEids, bytes32[] calldata remoteAddresses)
         external
         virtual
-        onlyFactory
+        onlyOwner
     {
         if (remoteEids.length != remoteAddresses.length) {
             revert ArrayLengthsMustMatch();
@@ -122,7 +113,7 @@ contract OmniXMultisender is Initializable, Clone, Ownable {
     function setGasLimit(uint32[] calldata remoteEids, uint128[] calldata gasLimits)
         external
         virtual
-        onlyFactory
+        onlyOwner
     {
         if (remoteEids.length != gasLimits.length) revert ArrayLengthsMustMatch();
         for (uint256 i; i < remoteEids.length; ++i) {
@@ -139,7 +130,7 @@ contract OmniXMultisender is Initializable, Clone, Ownable {
         uint64 confirmations,
         uint32[] calldata eids,
         address dvn
-    ) external virtual onlyFactory {
+    ) external virtual onlyOwner {
         if (lib == address(0) || dvn == address(0))
             revert("OmniXMultisender.setUlnConfigs: Either lib or dvn passed address is 0.");
 
@@ -182,10 +173,7 @@ contract OmniXMultisender is Initializable, Clone, Ownable {
         bytes[] calldata messages,
         bytes[] calldata options
     ) external view virtual returns (uint256[] memory nativeFees) {
-        require(
-            dstEids.length == messages.length && messages.length == options.length,
-            "OmniXMultisender.estimateFees: Input arrays must have the same length"
-        );
+        if (dstEids.length != messages.length || dstEids.length != options.length) revert ArrayLengthsMustMatch();
 
         nativeFees = new uint256[](dstEids.length);
         for (uint256 i; i < dstEids.length; ++i) {
@@ -227,14 +215,11 @@ contract OmniXMultisender is Initializable, Clone, Ownable {
         uint128[] calldata amounts,
         address to
     ) internal virtual {
-        require(
-            dstEids.length == amounts.length,
-            "OmniXMultisender._sendDeposits: Input arrays must have the same length"
-        );
+        if (dstEids.length != amounts.length) revert ArrayLengthsMustMatch();
         
         uint256 fee;
         uint256 omniBalance =
-            omniNft() == address(0) ? 0 : SafeTransferLib.balanceOf(omniNft(), msg.sender);
+            omniNftAddress == address(0) ? 0 : SafeTransferLib.balanceOf(omniNftAddress, msg.sender);
         uint256 discountBips =
             FixedPointMathLib.mulDiv(100, omniBalance > 5 ? 5 : omniBalance, 5);
 
@@ -279,7 +264,7 @@ contract OmniXMultisender is Initializable, Clone, Ownable {
 
     function _getGasLimit(uint32 _dstEid) internal view returns (uint128) {
         uint128 gasLimit = gasLimitLookup[_dstEid];
-        if (gasLimit == 0) return defaultGasLimit();
+        if (gasLimit == 0) return defaultGasLimit;
         else return gasLimit;
     }
 
