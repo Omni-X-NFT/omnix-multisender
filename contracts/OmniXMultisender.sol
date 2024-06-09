@@ -40,7 +40,10 @@ contract OmniXMultisender is Initializable, Ownable {
     /// -----------------------------------------------------------------------
     /// Constants
     /// -----------------------------------------------------------------------
-
+    
+    address internal immutable endpointAddress;
+    address internal immutable omniNftAddress;
+    uint24 internal immutable defaultGasLimit = 10000;
     uint256 internal constant BIPS_DIVISOR = 10_000;
 
     /// -----------------------------------------------------------------------
@@ -49,15 +52,7 @@ contract OmniXMultisender is Initializable, Ownable {
 
     mapping(uint32 => bytes32) public peers;
 
-    mapping(uint32 => uint128) public gasLimitLookup;
-
-    /// -----------------------------------------------------------------------
-    /// Constants
-    /// -----------------------------------------------------------------------
-
-    address internal immutable endpointAddress;
-    address internal immutable omniNftAddress;
-    uint24 internal immutable defaultGasLimit = 10000;
+    mapping(uint32 => uint128) public gasLimitLookup; 
 
     constructor (address _endpointAddress, address _omniNftAddress) payable {
         endpointAddress = _endpointAddress;
