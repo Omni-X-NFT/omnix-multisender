@@ -173,10 +173,7 @@ contract OmniXMultisender is Initializable, Ownable {
         bytes[] calldata messages,
         bytes[] calldata options
     ) external view virtual returns (uint256[] memory nativeFees) {
-        require(
-            dstEids.length == messages.length && messages.length == options.length,
-            "OmniXMultisender.estimateFees: Input arrays must have the same length"
-        );
+        if (dstEids.length != messages.length || dstEids.length != options.length) revert ArrayLengthsMustMatch();
 
         nativeFees = new uint256[](dstEids.length);
         for (uint256 i; i < dstEids.length; ++i) {
@@ -218,10 +215,7 @@ contract OmniXMultisender is Initializable, Ownable {
         uint128[] calldata amounts,
         address to
     ) internal virtual {
-        require(
-            dstEids.length == amounts.length,
-            "OmniXMultisender._sendDeposits: Input arrays must have the same length"
-        );
+        if (dstEids.length != amounts.length) revert ArrayLengthsMustMatch();
         
         uint256 fee;
         uint256 omniBalance =
