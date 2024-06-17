@@ -164,28 +164,65 @@ contract OmniXMultisender is Initializable, Ownable {
     {
         return _createSendDepositOption(dstEid, amount, to, customGasLimit);
     }
-
-    function estimateFees(
-        uint32[] calldata dstEids,
-        bytes[] calldata messages,
-        bytes[] calldata options
-    ) external view virtual returns (uint256[] memory nativeFees) {
-        if (dstEids.length != messages.length || dstEids.length != options.length) revert ArrayLengthsMustMatch();
-
-        nativeFees = new uint256[](dstEids.length);
-        for (uint256 i; i < dstEids.length; ++i) {
-            nativeFees[i] = endpoint().quote(
-                MessagingParams(
-                    dstEids[i], _getPeer(dstEids[i]), messages[i], options[i], false
-                ),
-                address(this)
-            ).nativeFee;
-        }
+ 
+    function estimateLZFees(uint32[] calldata _dstEids, uint128[] calldata _amounts, address _to)
+        external
+        view
+        virtual
+        returns (uint256)
+    {
+        return _estimateLZFees(_dstEids, _amounts, _to);
     }
 
+    function estimateTotalFees(uint256 _fee)
+        external
+        view
+        virtual
+        returns (uint256)
+    {
+        return _estimateTotalFees(_fee);
+    }
+
+    
     /// -----------------------------------------------------------------------
     /// Internal Helpers
     /// -----------------------------------------------------------------------
+
+    function _estimateLZFees(uint32[] calldata _dstEids, uint128[] calldata _amounts, address to)
+        internal
+        view
+        returns (uint256)
+    {
+        uint256 lzFee;
+        bytes32 convertedAddress = bytes32(uint256(uint160(address(this))));
+        for (uint256 i; i < _dstEids.length; ++i) {
+            lzFee += endpoint().quote(
+                MessagingParams(
+                    _dstEids[i],
+                    convertedAddress,
+                    "",
+                    _createSendDepositOption(_dstEids[i], _amounts[i], to, 0),
+                    false),
+                address(this)
+            ).nativeFee;
+        }
+        return lzFee;
+    }
+
+    function _estimateTotalFees(uint256 _fee)
+        internal
+        view
+        returns (uint256)
+    {
+        uint256 omniBalance =
+            omniNftAddress == address(0) ? 0 : SafeTransferLib.balanceOf(omniNftAddress, msg.sender);
+        uint256 discountBips =
+            FixedPointMathLib.mulDiv(100, omniBalance > 5 ? 5 : omniBalance, 5);
+        uint256 totalFee = FixedPointMathLib.mulDiv(
+            _fee, BIPS_DIVISOR + 100 - discountBips, BIPS_DIVISOR // we could use either fee or realizedFee for this, realizedFee is more reliable if we decide for an optimistic route
+        );
+        return totalFee;
+    }
 
     function _createSendDepositOption(uint32 dstEid, uint128 amount, address to, uint24 customGasLimit)
         internal
@@ -213,19 +250,11 @@ contract OmniXMultisender is Initializable, Ownable {
         address to,
         uint24 customGasLimit
     ) internal virtual {
-        if (dstEids.length != amounts.length) revert ArrayLengthsMustMatch();
-        
         uint256 fee;
-        uint256 omniBalance =
-            omniNftAddress == address(0) ? 0 : SafeTransferLib.balanceOf(omniNftAddress, msg.sender);
-        uint256 discountBips =
-            FixedPointMathLib.mulDiv(100, omniBalance > 5 ? 5 : omniBalance, 5);
-
-        uint256 nativeAmount = FixedPointMathLib.mulDiv(
-            msg.value, BIPS_DIVISOR - 100 + discountBips, BIPS_DIVISOR
-        );
-
-        for (uint256 i; i < dstEids.length;) {
+        uint256 initialBal = address(this).balance;
+        uint256 origContractBal = address(this).balance - msg.value; // selfbalance() is cheaper (5 gas) than cached value which may have to depend on push + swap
+         
+        for (uint256 i; i < dstEids.length;++i) {
             fee += _lzSend(
                 dstEids[i],
                 "",
@@ -233,12 +262,17 @@ contract OmniXMultisender is Initializable, Ownable {
                 address(this).balance,
                 address(this)
             ).fee.nativeFee;
-            unchecked {
-                ++i;
-            }
         }
-        
-        if (fee > nativeAmount) revert InsufficientNativeValue();
+
+        uint256 realizedFee = initialBal - address(this).balance;
+        assert(realizedFee == fee); // invariant ensuring what lz is reporting, matches the realized fee we computed based on our balance
+
+        uint256 totalFee = _estimateTotalFees(realizedFee);
+        if (totalFee > msg.value) revert InsufficientNativeValue();
+
+        uint256 refund = msg.value - totalFee;
+        if (refund > 0) SafeTransferLib.safeTransferETH(msg.sender, refund); // refund excess if necessary
+        assert(address(this).balance >= origContractBal); // ensure the original contract balance is at least still intact, ensuring no balance dipping
     }
 
     function _lzSend(
