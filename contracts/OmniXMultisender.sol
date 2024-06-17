@@ -213,19 +213,15 @@ contract OmniXMultisender is Initializable, Ownable {
         address to,
         uint24 customGasLimit
     ) internal virtual {
-        if (dstEids.length != amounts.length) revert ArrayLengthsMustMatch();
-        
         uint256 fee;
+        uint256 initialBal = address(this).balance;
+        uint256 origContractBal = address(this).balance - msg.value; // selfbalance() is cheaper (5 gas) than cached value which may have to depend on push + swap
         uint256 omniBalance =
             omniNftAddress == address(0) ? 0 : SafeTransferLib.balanceOf(omniNftAddress, msg.sender);
         uint256 discountBips =
             FixedPointMathLib.mulDiv(100, omniBalance > 5 ? 5 : omniBalance, 5);
-
-        uint256 nativeAmount = FixedPointMathLib.mulDiv(
-            msg.value, BIPS_DIVISOR - 100 + discountBips, BIPS_DIVISOR
-        );
-
-        for (uint256 i; i < dstEids.length;) {
+         
+        for (uint256 i; i < dstEids.length;++i) {
             fee += _lzSend(
                 dstEids[i],
                 "",
@@ -233,12 +229,19 @@ contract OmniXMultisender is Initializable, Ownable {
                 address(this).balance,
                 address(this)
             ).fee.nativeFee;
-            unchecked {
-                ++i;
-            }
         }
+
+        uint256 realizedFee = initialBal - address(this).balance;
+        assert(realizedFee == fee); // invariant ensuring what lz is reporting, matches the realized fee we computed based on our balance
+        uint256 omniXSurchargedFee = FixedPointMathLib.mulDiv(
+            fee, BIPS_DIVISOR + 100 - discountBips, BIPS_DIVISOR // we could use either fee or realizedFee for this, realizedFee is more reliable if we decide for an optimistic route
+        );
         
-        if (fee > nativeAmount) revert InsufficientNativeValue();
+        if (omniXSurchargedFee > msg.value) revert InsufficientNativeValue();
+
+        uint256 refund = msg.value - omniXSurchargedFee;
+        if (refund > 0) SafeTransferLib.safeTransferETH(msg.sender, refund); // refund excess if necessary
+        assert(address(this).balance >= origContractBal); // ensure the original contract balance is at least still intact, ensuring no balance dipping
     }
 
     function _lzSend(
