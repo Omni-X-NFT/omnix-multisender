@@ -46,6 +46,7 @@ contract OmniXMultisender is Initializable, Ownable {
     //@dev This gas limit value will be used unless a function specifies the value explicitly or it has been set in gasLimitLookeup by the owner
     uint24 internal immutable defaultGasLimit = 10000;
     uint256 internal constant BIPS_DIVISOR = 10_000;
+    bool internal PATH_INITIALIZED_ON_DEPLOYMENT = true;
 
     /// -----------------------------------------------------------------------
     /// Mutables
@@ -315,7 +316,7 @@ contract OmniXMultisender is Initializable, Ownable {
         virtual
         returns (bool)
     {
-        return _getPeer(origin.srcEid) == origin.sender;
+        return PATH_INITIALIZED_ON_DEPLOYMENT;
     }
 
     function lzReceive(Origin calldata, bytes32, bytes calldata, address, bytes calldata)
