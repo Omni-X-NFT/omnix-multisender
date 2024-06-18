@@ -29,6 +29,11 @@ import { FixedPointMathLib } from "solady/src/utils/FixedPointMathLib.sol";
 
 /// @title OmniXMultisender
 contract OmniXMultisender is Initializable, Ownable {
+
+    // Events
+    event PeerSet(uint32 indexed remoteEid, bytes32 indexed remoteAddress);
+    event GasLimitSet(uint32 indexed remoteEid, uint128 indexed gasLimit);
+    event Withdrawal(address token, address to);
     /// -----------------------------------------------------------------------
     /// Custom Errors
     /// -----------------------------------------------------------------------
@@ -93,6 +98,7 @@ contract OmniXMultisender is Initializable, Ownable {
     function withdraw(address token, address to) external virtual onlyOwner {
         if (token == address(0)) SafeTransferLib.safeTransferAllETH(to);
         else SafeTransferLib.safeTransferAll(token, to);
+        emit Withdrawal(token, to); // Emit event
     }
 
     function setPeers(uint32[] calldata remoteEids, bytes32[] calldata remoteAddresses)
@@ -105,6 +111,7 @@ contract OmniXMultisender is Initializable, Ownable {
         }
         for (uint256 i; i < remoteEids.length; ++i) {
             peers[remoteEids[i]] = remoteAddresses[i];
+            emit PeerSet(remoteEids[i], remoteAddresses[i]); // Emit event
         }
     }
 
@@ -116,6 +123,7 @@ contract OmniXMultisender is Initializable, Ownable {
         if (remoteEids.length != gasLimits.length) revert ArrayLengthsMustMatch();
         for (uint256 i; i < remoteEids.length; ++i) {
             gasLimitLookup[remoteEids[i]] = gasLimits[i];
+            emit GasLimitSet(remoteEids[i], gasLimits[i]); // Emit event
         }
     }
 
