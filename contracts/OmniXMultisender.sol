@@ -45,7 +45,7 @@ contract OmniXMultisender is Initializable, Ownable {
     /// -----------------------------------------------------------------------
     /// Constants
     /// -----------------------------------------------------------------------
-    
+    bytes32 public immutable convertedAddress;
     address internal immutable endpointAddress;
     address internal immutable omniNftAddress;
     //@dev This gas limit value will be used unless a function specifies the value explicitly or it has been set in gasLimitLookeup by the owner
@@ -64,6 +64,7 @@ contract OmniXMultisender is Initializable, Ownable {
     constructor (address _endpointAddress, address _omniNftAddress) payable {
         endpointAddress = _endpointAddress;
         omniNftAddress = _omniNftAddress;
+        convertedAddress = bytes32(uint256(uint160(address(this))));
     }
 
     function endpoint() public view virtual returns (ILayerZeroEndpointV2) {
@@ -203,7 +204,6 @@ contract OmniXMultisender is Initializable, Ownable {
         returns (uint256)
     {
         uint256 lzFee;
-        bytes32 convertedAddress = bytes32(uint256(uint160(address(this))));
         for (uint256 i; i < _dstEids.length; ++i) {
             lzFee += endpoint().quote(
                 MessagingParams(
