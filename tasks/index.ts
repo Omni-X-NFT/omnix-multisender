@@ -1,6 +1,3 @@
 import './multisend'
-import './deployOmniXMultisender'
-import './deployOmniXMultisenderClone'
-import './deployAllOmniXMultisenderClones'
 import './setPeers'
 import './setUlnConfigs'

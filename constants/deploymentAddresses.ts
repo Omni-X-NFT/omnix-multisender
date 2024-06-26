@@ -6,6 +6,8 @@ export const firstCloneDeploymentAddress = '0x559Ac215767928ca3c8A8a67a717bcC578
 
 export const secondCloneDeploymentAddress = '0xBDFe87Ab00357cE95CaE6dd8f557041A5F8B5870'
 
+export const allNetworks = ['avalanche', 'base', 'beam', 'blast', 'canto', 'celo', 'conflux', 'core', 'dos', 'ethereum', 'fantom', 'fraxtal', 'fuse', 'gnosis', 'harmony', 'eon', 'kava', 'klaytn', 'linea', 'loot', 'manta', 'mantle', 'mode', 'moonbeam', 'moonriver', 'okx', 'opBNB', 'optimism', 'rarible', 'scroll', 'telos', 'tenet', 'xai', ['arbitrum', 'nova', 'metis', 'polygon', 'zora', 'orderly' ] ]
+
 export const firstDeploymentAddressNetworks = ['avalanche', 'base', 'beam', 'blast', 'canto', 'celo', 'conflux', 'core', 'dos', 'ethereum', 'fantom', 'fraxtal', 'fuse', 'gnosis', 'harmony', 'eon', 'kava', 'klaytn', 'linea', 'loot', 'manta', 'mantle', 'mode', 'moonbeam', 'moonriver', 'okx', 'opBNB', 'optimism', 'rarible', 'scroll', 'telos', 'tenet', 'xai' ]
 
 export const secondDeploymentAddressNetworks = ['arbitrum', 'nova', 'metis', 'polygon', 'zora', 'orderly' ]
