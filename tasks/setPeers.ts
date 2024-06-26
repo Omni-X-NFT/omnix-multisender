@@ -1,15 +1,12 @@
 import { task } from 'hardhat/config'
 import { HardhatRuntimeEnvironment, TaskArguments } from 'hardhat/types'
 
-import { EndpointVersion, networkToEndpointId } from '@layerzerolabs/lz-definitions'
-
 import {  allNetworks, MainnetV2NetworkToEndpointId} from '../constants/deploymentAddresses'
 
 import { OmniXMultisender, OmniXMultisender__factory } from '../typechain-types'
 import { BigNumberish, BytesLike, zeroPadValue } from 'ethers'
 
-task(`setPeers`, 'setPeers for a Multisender contract. used for connecting instances deployed on a different adress across the chains')
-// .addParam('targetNetwork', 'name of the target network')    
+task(`setPeers`, 'setPeers for a Multisender contract. used for connecting instances deployed on different chains')
 .setAction(async (taskArguments: TaskArguments, hre: HardhatRuntimeEnvironment) => {
         const { ethers, network } = hre
         // const { targetNetwork } = taskArguments
@@ -26,6 +23,7 @@ task(`setPeers`, 'setPeers for a Multisender contract. used for connecting insta
             const destinationNetworkId = MainnetV2NetworkToEndpointId[element as keyof typeof MainnetV2NetworkToEndpointId]
             console.log(destinationNetworkId)
             remoteEids.push(destinationNetworkId)
+            // we are assuming here that the multisender on all other networks has the same address as on the source one
             remoteDeploymentAddresses.push(zeroPadValue(omniXMultisenderAddress,32))
             console.log(remoteDeploymentAddresses[i].length)
         });
