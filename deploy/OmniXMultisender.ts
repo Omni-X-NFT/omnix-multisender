@@ -1,11 +1,14 @@
 import assert from 'assert'
 
+import { omniElementsAddresses } from '../constants/omniElementsAddresses'
 import { type DeployFunction } from 'hardhat-deploy/types'
+
+type IndexedAddresses = { [key: string]: string };
 
 // TODO declare your contract name here
 const contractName = 'OmniXMultisender'
 
-const deployOmniMultisender: DeployFunction = async (hre) => {
+const deployOmniXMultisender: DeployFunction = async (hre) => {
     const { getNamedAccounts, deployments } = hre
 
     const { deploy } = deployments
@@ -13,8 +16,12 @@ const deployOmniMultisender: DeployFunction = async (hre) => {
 
     assert(deployer, 'Missing named deployer account')
 
-    console.log(`Network: ${hre.network.name}`)
+    const networkName = hre.network.name
+
+    console.log(`Network: ${networkName}`)
     console.log(`Deployer: ${deployer}`)
+
+    const localOmniElementAddress = (omniElementsAddresses as IndexedAddresses)[networkName] || ""; 
 
     // This is an external deployment pulled in from @layerzerolabs/lz-evm-sdk-v2
     //
@@ -36,12 +43,11 @@ const deployOmniMultisender: DeployFunction = async (hre) => {
 
     const { address } = await deploy(contractName, {
         from: deployer,
-        args: [],
         contract: 'contracts/OmniXMultisender.sol:OmniXMultisender',
-        // args: [
-        //     endpointV2Deployment.address, // LayerZero's EndpointV2 address
-        //     deployer, // owner
-        // ],
+        args: [
+            endpointV2Deployment.address, // LayerZero's EndpointV2 address
+            localOmniElementAddress // address of Omni Elements (discount ERC-721), empty if a collection is not deployed on a chain
+        ],
         log: true,
         skipIfAlreadyDeployed: false,
     })
@@ -49,6 +55,6 @@ const deployOmniMultisender: DeployFunction = async (hre) => {
     console.log(`Deployed contract: ${contractName}, network: ${hre.network.name}, address: ${address}`)
 }
 
-deployOmniMultisender.tags = [contractName]
+deployOmniXMultisender.tags = [contractName]
 
-export default deployOmniMultisender
+export default deployOmniXMultisender
