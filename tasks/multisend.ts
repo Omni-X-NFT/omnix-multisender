@@ -15,7 +15,7 @@ task(`multisend`, 'multisend funds with fixed native on destination chains')
         console.log(`Multisender Address: ${omniXMultisenderAddress}`)
         
         // connect to an instance of OmniXMultisender
-        const omniMultisender: OmniXMultisender = OmniXMultisender__factory.connect(
+        const omniXMultisender: OmniXMultisender = OmniXMultisender__factory.connect(
             omniXMultisenderAddress,
             owner
         )
@@ -23,7 +23,7 @@ task(`multisend`, 'multisend funds with fixed native on destination chains')
         // const input = generateOptions(owner.address, deis)
         // note that this code is meant for testing purposes only
         // in production you MUST implement a read call to estimateFees first so the users know exactly how much they should pass
-        const tx = await omniMultisender[`sendDeposits(uint32[],uint128[],uint24)`].send(deis,[100000000,100000000],0)
+        const tx = await omniXMultisender.sendDeposits_3FF34E(deis,[100000000,100000000],0)
         console.log(`Multisend on ${network.name} complete.`)
         console.log(tx.hash)
     })
