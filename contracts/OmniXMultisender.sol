@@ -75,7 +75,7 @@ contract OmniXMultisender is Initializable, Ownable {
     /// Actions
     /// -----------------------------------------------------------------------
 
-    function sendDeposits(uint32[] calldata dstEids, uint128[] calldata amounts, uint24 customGasLimit)
+    function sendDeposits_3FF34E(uint32[] calldata dstEids, uint128[] calldata amounts, uint24 customGasLimit)
         external
         payable
         virtual
