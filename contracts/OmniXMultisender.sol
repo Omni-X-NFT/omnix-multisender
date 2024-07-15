@@ -25,7 +25,6 @@ import { LibZip } from "solady/src/utils/LibZip.sol";
 import { Ownable } from "solady/src/auth/Ownable.sol";
 import { Initializable } from "solady/src/utils/Initializable.sol";
 import { SafeTransferLib } from "solady/src/utils/SafeTransferLib.sol";
-import { FixedPointMathLib } from "solady/src/utils/FixedPointMathLib.sol";
 
 /// @title OmniXMultisender
 contract OmniXMultisender is Initializable, Ownable {
@@ -47,7 +46,6 @@ contract OmniXMultisender is Initializable, Ownable {
     /// -----------------------------------------------------------------------
     bytes32 public immutable convertedAddress;
     address internal immutable endpointAddress;
-    address internal immutable omniNftAddress;
     //@dev This gas limit value will be used unless a function specifies the value explicitly or it has been set in gasLimitLookeup by the owner
     uint24 internal immutable defaultGasLimit = 10000;
     uint256 internal constant BIPS_DIVISOR = 10_000;
@@ -61,10 +59,9 @@ contract OmniXMultisender is Initializable, Ownable {
 
     mapping(uint32 => uint128) public gasLimitLookup; 
 
-    constructor (address _endpointAddress, address _omniNftAddress) payable {
+    constructor (address _endpointAddress) payable {
         Ownable._initializeOwner(msg.sender);
         endpointAddress = _endpointAddress;
-        omniNftAddress = _omniNftAddress;
         convertedAddress = bytes32(uint256(uint160(address(this))));
     }
 
@@ -185,15 +182,6 @@ contract OmniXMultisender is Initializable, Ownable {
         return _estimateLZFees(_dstEids, _amounts, _to);
     }
 
-    function estimateTotalFees(uint256 _fee)
-        external
-        view
-        virtual
-        returns (uint256)
-    {
-        return _estimateTotalFees(_fee);
-    }
-
     
     /// -----------------------------------------------------------------------
     /// Internal Helpers
@@ -217,21 +205,6 @@ contract OmniXMultisender is Initializable, Ownable {
             ).nativeFee;
         }
         return lzFee;
-    }
-
-    function _estimateTotalFees(uint256 _fee)
-        internal
-        view
-        returns (uint256)
-    {
-        uint256 omniBalance =
-            omniNftAddress == address(0) ? 0 : SafeTransferLib.balanceOf(omniNftAddress, msg.sender);
-        uint256 discountBips =
-            FixedPointMathLib.mulDiv(100, omniBalance > 5 ? 5 : omniBalance, 5);
-        uint256 totalFee = FixedPointMathLib.mulDiv(
-            _fee, BIPS_DIVISOR + 100 - discountBips, BIPS_DIVISOR // we could use either fee or realizedFee for this, realizedFee is more reliable if we decide for an optimistic route
-        );
-        return totalFee;
     }
 
     function _createSendDepositOption(uint32 dstEid, uint128 amount, address to, uint24 customGasLimit)
@@ -277,10 +250,9 @@ contract OmniXMultisender is Initializable, Ownable {
         uint256 realizedFee = initialBal - address(this).balance;
         assert(realizedFee == fee); // invariant ensuring what lz is reporting, matches the realized fee we computed based on our balance
 
-        uint256 totalFee = _estimateTotalFees(realizedFee);
-        if (totalFee > msg.value) revert InsufficientNativeValue();
+        if (realizedFee > msg.value) revert InsufficientNativeValue();
 
-        uint256 refund = msg.value - totalFee;
+        uint256 refund = msg.value - realizedFee;
         if (refund > 0) SafeTransferLib.safeTransferETH(msg.sender, refund); // refund excess if necessary
         assert(address(this).balance >= origContractBal); // ensure the original contract balance is at least still intact, ensuring no balance dipping
     }
