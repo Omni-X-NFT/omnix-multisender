@@ -62,6 +62,7 @@ contract OmniXMultisender is Initializable, Ownable {
     mapping(uint32 => uint128) public gasLimitLookup; 
 
     constructor (address _endpointAddress, address _omniNftAddress) payable {
+        Ownable._initializeOwner(msg.sender);
         endpointAddress = _endpointAddress;
         omniNftAddress = _omniNftAddress;
         convertedAddress = bytes32(uint256(uint160(address(this))));

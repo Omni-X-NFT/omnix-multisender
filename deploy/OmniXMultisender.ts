@@ -20,8 +20,7 @@ const deployOmniXMultisender: DeployFunction = async (hre) => {
 
     console.log(`Network: ${networkName}`)
     console.log(`Deployer: ${deployer}`)
-
-    const localOmniElementAddress = (omniElementsAddresses as IndexedAddresses)[networkName] || "";
+    const localOmniElementAddress = (omniElementsAddresses as IndexedAddresses)[networkName] || "0x0000000000000000000000000000000000000000";
     console.log(`Omni Elements Address: ${localOmniElementAddress}`)
 
     // This is an external deployment pulled in from @layerzerolabs/lz-evm-sdk-v2
