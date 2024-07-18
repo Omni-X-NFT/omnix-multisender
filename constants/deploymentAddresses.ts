@@ -6,9 +6,95 @@ export const firstCloneDeploymentAddress = '0x559Ac215767928ca3c8A8a67a717bcC578
 
 export const secondCloneDeploymentAddress = '0xBDFe87Ab00357cE95CaE6dd8f557041A5F8B5870'
 
-export const firstDeploymentAddressNetworks = ['avalanche', 'base', 'beam', 'blast', 'canto', 'celo', 'conflux', 'core', 'dos', 'ethereum', 'fantom', 'fraxtal', 'fuse', 'gnosis', 'harmony', 'eon', 'kava', 'klaytn', 'linea', 'loot', 'manta', 'mantle', 'mode', 'moonbeam', 'moonriver', 'okx', 'opBNB', 'optimism', 'rarible', 'scroll', 'telos', 'tenet', 'xai' ]
+export const allNetworks = ['avalanche', 'base', 'beam', 'blast', 'canto', 'celo', 'conflux', 'core', 'dos', 'ethereum', 'fantom', 'fraxtal', 'fuse', 'gnosis', 'harmony', 'eon', 'kava', 'klaytn', 'linea', 'loot', 'manta', 'mantle', 'mode', 'moonbeam', 'moonriver', 'okx', 'opBNB', 'optimism', 'rarible', 'scroll', 'telos', 'tenet', 'xai', 'arbitrum', 'nova', 'metis', 'polygon', 'zora', 'orderly']
 
-export const secondDeploymentAddressNetworks = ['arbitrum', 'nova', 'metis', 'polygon', 'zora', 'orderly' ]
+export const omnixDVNeids = [30101, 30102, 30106, 30109, 30110, 30111, 30112, 30184]
+
+// export const firstDeploymentAddressNetworks = ['avalanche', 'base', 'beam', 'blast', 'canto', 'celo', 'conflux', 'core', 'dos', 'ethereum', 'fantom', 'fraxtal', 'fuse', 'gnosis', 'harmony', 'eon', 'kava', 'klaytn', 'linea', 'loot', 'manta', 'mantle', 'mode', 'moonbeam', 'moonriver', 'okx', 'opBNB', 'optimism', 'rarible', 'scroll', 'telos', 'tenet', 'xai' ]
+
+// export const secondDeploymentAddressNetworks = ['arbitrum', 'nova', 'metis', 'polygon', 'zora', 'orderly' ]
+
+export enum OmniXDVNAddresses {
+  "ethereum"= "0xAf75bfD402f3d4EE84978179a6c87D16c4Bd1724",
+  "bsc"= "0x5a4c666E9C7aA86FD4fBFDFbfd04646DcC45C6c5",
+  "avalanche"= "0x21cAF0BCE846AAA78C9f23C5A4eC5988EcBf9988",
+  "polygon"= "0x06b85533967179eD5bC9C754b84aE7d02f7eD830",
+  "arbitrum"= "0xabEa0b6B9237b589e676dC16f6D74Bf7612591f4",
+  "optimism"= "0x03d2414476a742Aba715BcC337583C820525E22a",
+  "fantom"= "0xE0F0FbBDBF9d398eCA0dd8c86d1F308D895b9Eb7",
+  "base"= "0xeEdE111103535e473451311e26C3E6660b0F77e1"
+  }
+
+export enum LZDVNAddresses {
+  "ethereum"= "0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+  "bsc"= "0xfD6865c841c2d64565562fCc7e05e619A30615f0",
+  "avalanche"= "0x962F502A63F5FBeB44DC9ab932122648E8352959",
+  "polygon"= "0x23DE2FE932d9043291f870324B74F820e11dc81A",
+  "zkpolygon"= "0x488863D609F3A673875a914fBeE7508a1DE45eC6",
+  "arbitrum"= "0x2f55C492897526677C5B68fb199ea31E2c126416",
+  "optimism"= "0x6A02D83e8d433304bba74EF1c427913958187142",
+  "fantom"= "0xE60A3959Ca23a92BF5aAf992EF837cA7F828628a",
+  "dfk"= "0x1F7E674143031e74bc48a0c570c174A07aA9C5d0",
+  "harmony"= "0x8363302080e711E0CAb978C081b9e69308d49808",
+  "dexalot"= "0xB98D764D25d53F803f05d451225612e4A9A3b712",
+  "gnosis"= "0x11bb2991882a86Dc3E38858d922559A385d506bA",
+  "celo"= "0x75b073994560A5c03Cd970414d9170be0C6e5c36",
+  "moonbeam"= "0x8B9b67b22ab2ed6Ee324C2fd43734dBd2dDDD045",
+  "fuse"= "0x795F8325aF292Ff6E58249361d1954893BE15Aff",
+  "astar"= "0xE1975c47779EdAaABa31F64934A33Affd3CE15c2",
+  "zksync"= "0x620A9DF73D2F1015eA75aea1067227F9013f5C51",
+  "dos"= "0x203DFa8CBcbe234821DA01a6e95Fcbf92dA065EA",
+  "klaytn"= "0xc80233AD8251E668BecbC3B0415707fC7075501e",
+  "metis"= "0x32d4F92437454829b3Fe7BEBfeCE5D0523DEb475",
+  "coredao"= "0x3C5575898f59c097681d1Fc239c2c6Ad36B7b41c",
+  "okx"= "0x52EEA5c490fB89c7A0084B32FEAB854eefF07c82",
+  "meter"= "0xB792aFc44214B5f910216Bc904633dbD15b31680",
+  "base"= "0x9e059a54699a285714207b43B055483E78FAac25",
+  "linea/zkconsensys"= "0x129Ee430Cb2Ff2708CCADDBDb408a88Fe4FFd480",
+  "moonriver"= "0x2b3eBE6662Ad402317EE7Ef4e6B25c79a0f91015",
+  "scroll"= "0xbe0d08a85EeBFCC6eDA0A843521f7CBB1180D2e2",
+  "kava"= "0x2D40A7B66F776345Cf763c8EBB83199Cd285e7a3",
+  "tenet"= "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6",
+  "canto"= "0x1BAcC2205312534375c8d1801C27D28370656cFf",
+  "orderly"= "0xF53857dbc0D2c59D5666006EC200cbA2936B8c35",
+  "nova"= "0xb7e97ad5661134185Fe608b2A31fe8cEf2147Ba9",
+  "meritcircle"= "0x5E38c31C28d0F485d6dc3fFAbF8980bBCD882294",
+  "mantle"= "0x28B6140ead70cb2Fb669705b3598ffB4BEaA060b",
+  "hubble"= "0xe9bA4C1e76D874a43942718Dafc96009ec9D9917",
+  "zora"= "0xC1EC25A9e8a8DE5Aa346f635B33e5B74c4c081aF",
+  "tomo"= "0x1aCe9DD1BC743aD036eF2D92Af42Ca70A1159df5",
+  "loot"= "0x4f8B7a7a346Da5c467085377796e91220d904c15",
+  "telos"= "0x3C5575898f59c097681d1Fc239c2c6Ad36B7b41c",
+  "aurora"= "0xD4a903930f2c9085586cda0b11D9681EECb20D2f",
+  "opbnb"= "0x3eBb618B5c9d09DE770979D552b27D6357Aff73B",
+  "shimmer"= "0x9Bdf3aE7E2e3D211811E5e782a808Ca0a75BF1Fc",
+  "conflux"= "0x8D183A062e99cad6f3723E6d836F9EA13886B173",
+  "eon"= "0xe9AE261D3aFf7d3fCCF38Fa2d612DD3897e07B2d",
+  "xpla"= "0x2d24207F9C1F77B2E08F2C3aD430da18e355CF66",
+  "astar-zkevm"= "0xce8358bc28dd8296Ce8cAF1CD2b44787abd65887",
+  "manta"= "0xA09dB5142654e3eB5Cf547D66833FAe7097B21C3",
+  "rarible"= "0x0b5E5452d0c9DA1Bb5fB0664F48313e9667d7820",
+  "etherlink"= "0xc097ab8CD7b053326DFe9fB3E3a31a0CCe3B526f",
+  "injective"= "0xb21f945e8917c6Cd69FcFE66ac6703B90f7fe004",
+  "blast"= "0xc097ab8cd7b053326dfe9fb3e3a31a0cce3b526f",
+  "xai"= "0x9C061c9A4782294eeF65ef28Cb88233A987F4bdD",
+  "tiltyard"= "0xCFc3f9dD0205b76FF04e20243f106465Dd829656",
+  "fraxtal"= "0xcCE466a522984415bC91338c232d98869193D46e",
+  "mode"= "0xce8358bc28dd8296Ce8cAF1CD2b44787abd65887",
+  "real"= "0x6788f52439ACA6BFF597d3eeC2DC9a44B8FEE842",
+  "merlin"= "0x6788f52439ACA6BFF597d3eeC2DC9a44B8FEE842",
+  "degen"= "0x6788f52439ACA6BFF597d3eeC2DC9a44B8FEE842",
+  "masa"= "0x9C061c9A4782294eeF65ef28Cb88233A987F4bdD",
+  "bob"= "0x6788f52439ACA6BFF597d3eeC2DC9a44B8FEE842",
+  "skale"= "0xce8358bc28dd8296Ce8cAF1CD2b44787abd65887",
+  "xlayer"= "0x9C061c9A4782294eeF65ef28Cb88233A987F4bdD",
+  "sanko"= "0x6788f52439ACA6BFF597d3eeC2DC9a44B8FEE842",
+  "homeverse"= "0x6788f52439ACA6BFF597d3eeC2DC9a44B8FEE842",
+  "iota"= "0x6788f52439ACA6BFF597d3eeC2DC9a44B8FEE842",
+  "sei"= "0x6788f52439ACA6BFF597d3eeC2DC9a44B8FEE842",
+  "cyber"= "0x6788f52439ACA6BFF597d3eeC2DC9a44B8FEE842",
+  "tron"= "0x8bC1D368036EE5E726D230beB685294BE191A24e"
+}
 
 export enum  MainnetV2NetworkToEndpointId {
   'ethereum' = 30101,

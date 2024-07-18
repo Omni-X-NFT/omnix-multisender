@@ -25,10 +25,14 @@ import { LibZip } from "solady/src/utils/LibZip.sol";
 import { Ownable } from "solady/src/auth/Ownable.sol";
 import { Initializable } from "solady/src/utils/Initializable.sol";
 import { SafeTransferLib } from "solady/src/utils/SafeTransferLib.sol";
-import { FixedPointMathLib } from "solady/src/utils/FixedPointMathLib.sol";
 
 /// @title OmniXMultisender
 contract OmniXMultisender is Initializable, Ownable {
+
+    // Events
+    event PeerSet(uint32 indexed remoteEid, bytes32 indexed remoteAddress);
+    event GasLimitSet(uint32 indexed remoteEid, uint128 indexed gasLimit);
+    event Withdrawal(address token, address to);
     /// -----------------------------------------------------------------------
     /// Custom Errors
     /// -----------------------------------------------------------------------
@@ -40,11 +44,12 @@ contract OmniXMultisender is Initializable, Ownable {
     /// -----------------------------------------------------------------------
     /// Constants
     /// -----------------------------------------------------------------------
-    
+    bytes32 public immutable convertedAddress;
     address internal immutable endpointAddress;
-    address internal immutable omniNftAddress;
+    //@dev This gas limit value will be used unless a function specifies the value explicitly or it has been set in gasLimitLookeup by the owner
     uint24 internal immutable defaultGasLimit = 10000;
     uint256 internal constant BIPS_DIVISOR = 10_000;
+    bool internal PATH_INITIALIZED_ON_DEPLOYMENT = true;
 
     /// -----------------------------------------------------------------------
     /// Mutables
@@ -54,9 +59,10 @@ contract OmniXMultisender is Initializable, Ownable {
 
     mapping(uint32 => uint128) public gasLimitLookup; 
 
-    constructor (address _endpointAddress, address _omniNftAddress) payable {
+    constructor (address _endpointAddress) payable {
+        Ownable._initializeOwner(msg.sender);
         endpointAddress = _endpointAddress;
-        omniNftAddress = _omniNftAddress;
+        convertedAddress = bytes32(uint256(uint160(address(this))));
     }
 
     function endpoint() public view virtual returns (ILayerZeroEndpointV2) {
@@ -67,20 +73,21 @@ contract OmniXMultisender is Initializable, Ownable {
     /// Actions
     /// -----------------------------------------------------------------------
 
-    function sendDeposits(uint32[] calldata dstEids, uint128[] calldata amounts)
+    function sendDeposits_3FF34E(uint32[] calldata dstEids, uint128[] calldata amounts, uint24 customGasLimit)
         external
         payable
         virtual
     {
-        _sendDeposits(dstEids, amounts, msg.sender);
+        _sendDeposits(dstEids, amounts, msg.sender, customGasLimit);
     }
 
     function sendDeposits(
         uint32[] calldata dstEids,
         uint128[] calldata amounts,
-        address to
+        address to,
+        uint24 customGasLimit
     ) external payable virtual {
-        _sendDeposits(dstEids, amounts, to);
+        _sendDeposits(dstEids, amounts, to, customGasLimit);
     }
 
     /// -----------------------------------------------------------------------
@@ -90,6 +97,7 @@ contract OmniXMultisender is Initializable, Ownable {
     function withdraw(address token, address to) external virtual onlyOwner {
         if (token == address(0)) SafeTransferLib.safeTransferAllETH(to);
         else SafeTransferLib.safeTransferAll(token, to);
+        emit Withdrawal(token, to); // Emit event
     }
 
     function setPeers(uint32[] calldata remoteEids, bytes32[] calldata remoteAddresses)
@@ -102,6 +110,7 @@ contract OmniXMultisender is Initializable, Ownable {
         }
         for (uint256 i; i < remoteEids.length; ++i) {
             peers[remoteEids[i]] = remoteAddresses[i];
+            emit PeerSet(remoteEids[i], remoteAddresses[i]); // Emit event
         }
     }
 
@@ -113,6 +122,7 @@ contract OmniXMultisender is Initializable, Ownable {
         if (remoteEids.length != gasLimits.length) revert ArrayLengthsMustMatch();
         for (uint256 i; i < remoteEids.length; ++i) {
             gasLimitLookup[remoteEids[i]] = gasLimits[i];
+            emit GasLimitSet(remoteEids[i], gasLimits[i]); // Emit event
         }
     }
 
@@ -154,38 +164,50 @@ contract OmniXMultisender is Initializable, Ownable {
     /// Read-Only Helpers
     /// -----------------------------------------------------------------------
 
-    function createSendDepositOption(uint32 dstEid, uint128 amount, address to)
+    function createSendDepositOption(uint32 dstEid, uint128 amount, address to, uint24 customGasLimit)
         external
         view
         virtual
         returns (bytes memory)
     {
-        return _createSendDepositOption(dstEid, amount, to);
+        return _createSendDepositOption(dstEid, amount, to, customGasLimit);
+    }
+ 
+    function estimateLZFees(uint32[] calldata _dstEids, uint128[] calldata _amounts, address _to)
+        external
+        view
+        virtual
+        returns (uint256)
+    {
+        return _estimateLZFees(_dstEids, _amounts, _to);
     }
 
-    function estimateFees(
-        uint32[] calldata dstEids,
-        bytes[] calldata messages,
-        bytes[] calldata options
-    ) external view virtual returns (uint256[] memory nativeFees) {
-        if (dstEids.length != messages.length || dstEids.length != options.length) revert ArrayLengthsMustMatch();
-
-        nativeFees = new uint256[](dstEids.length);
-        for (uint256 i; i < dstEids.length; ++i) {
-            nativeFees[i] = endpoint().quote(
-                MessagingParams(
-                    dstEids[i], _getPeer(dstEids[i]), messages[i], options[i], false
-                ),
-                address(this)
-            ).nativeFee;
-        }
-    }
-
+    
     /// -----------------------------------------------------------------------
     /// Internal Helpers
     /// -----------------------------------------------------------------------
 
-    function _createSendDepositOption(uint32 dstEid, uint128 amount, address to)
+    function _estimateLZFees(uint32[] calldata _dstEids, uint128[] calldata _amounts, address to)
+        internal
+        view
+        returns (uint256)
+    {
+        uint256 lzFee;
+        for (uint256 i; i < _dstEids.length; ++i) {
+            lzFee += endpoint().quote(
+                MessagingParams(
+                    _dstEids[i],
+                    convertedAddress,
+                    "",
+                    _createSendDepositOption(_dstEids[i], _amounts[i], to, 0),
+                    false),
+                address(this)
+            ).nativeFee;
+        }
+        return lzFee;
+    }
+
+    function _createSendDepositOption(uint32 dstEid, uint128 amount, address to, uint24 customGasLimit)
         internal
         view
         virtual
@@ -196,7 +218,7 @@ contract OmniXMultisender is Initializable, Ownable {
             uint8(1),
             uint16(16 + 1),
             uint8(1),
-            _getGasLimit(dstEid), // unrolled _createReceiveOption end
+            _getGasLimit(dstEid, customGasLimit), // unrolled _createReceiveOption end
             uint8(1),
             uint16(32 + 16 + 1),
             uint8(2),
@@ -208,34 +230,31 @@ contract OmniXMultisender is Initializable, Ownable {
     function _sendDeposits(
         uint32[] calldata dstEids,
         uint128[] calldata amounts,
-        address to
+        address to,
+        uint24 customGasLimit
     ) internal virtual {
-        if (dstEids.length != amounts.length) revert ArrayLengthsMustMatch();
-        
         uint256 fee;
-        uint256 omniBalance =
-            omniNftAddress == address(0) ? 0 : SafeTransferLib.balanceOf(omniNftAddress, msg.sender);
-        uint256 discountBips =
-            FixedPointMathLib.mulDiv(100, omniBalance > 5 ? 5 : omniBalance, 5);
-
-        uint256 nativeAmount = FixedPointMathLib.mulDiv(
-            msg.value, BIPS_DIVISOR - 100 + discountBips, BIPS_DIVISOR
-        );
-
-        for (uint256 i; i < dstEids.length;) {
+        uint256 initialBal = address(this).balance;
+        uint256 origContractBal = address(this).balance - msg.value; // selfbalance() is cheaper (5 gas) than cached value which may have to depend on push + swap
+         
+        for (uint256 i; i < dstEids.length;++i) {
             fee += _lzSend(
                 dstEids[i],
                 "",
-                _createSendDepositOption(dstEids[i], amounts[i], to),
+                _createSendDepositOption(dstEids[i], amounts[i], to, customGasLimit),
                 address(this).balance,
                 address(this)
             ).fee.nativeFee;
-            unchecked {
-                ++i;
-            }
         }
-        
-        if (fee > nativeAmount) revert InsufficientNativeValue();
+
+        uint256 realizedFee = initialBal - address(this).balance;
+        assert(realizedFee == fee); // invariant ensuring what lz is reporting, matches the realized fee we computed based on our balance
+
+        if (realizedFee > msg.value) revert InsufficientNativeValue();
+
+        uint256 refund = msg.value - realizedFee;
+        if (refund > 0) SafeTransferLib.safeTransferETH(msg.sender, refund); // refund excess if necessary
+        assert(address(this).balance >= origContractBal); // ensure the original contract balance is at least still intact, ensuring no balance dipping
     }
 
     function _lzSend(
@@ -257,7 +276,8 @@ contract OmniXMultisender is Initializable, Ownable {
         else return trustedRemote;
     }
 
-    function _getGasLimit(uint32 _dstEid) internal view returns (uint128) {
+    function _getGasLimit(uint32 _dstEid, uint24 _customGasLimit) internal view returns (uint128) {
+        if (_customGasLimit != 0) return _customGasLimit;
         uint128 gasLimit = gasLimitLookup[_dstEid];
         if (gasLimit == 0) return defaultGasLimit;
         else return gasLimit;
@@ -277,7 +297,7 @@ contract OmniXMultisender is Initializable, Ownable {
         virtual
         returns (bool)
     {
-        return _getPeer(origin.srcEid) == origin.sender;
+        return PATH_INITIALIZED_ON_DEPLOYMENT;
     }
 
     function lzReceive(Origin calldata, bytes32, bytes calldata, address, bytes calldata)
