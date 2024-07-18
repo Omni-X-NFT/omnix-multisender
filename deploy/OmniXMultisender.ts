@@ -1,6 +1,5 @@
 import assert from 'assert'
 
-import { omniElementsAddresses } from '../constants/omniElementsAddresses'
 import { type DeployFunction } from 'hardhat-deploy/types'
 
 type IndexedAddresses = { [key: string]: string };
@@ -20,8 +19,6 @@ const deployOmniXMultisender: DeployFunction = async (hre) => {
 
     console.log(`Network: ${networkName}`)
     console.log(`Deployer: ${deployer}`)
-    const localOmniElementAddress = (omniElementsAddresses as IndexedAddresses)[networkName] || "0x0000000000000000000000000000000000000000";
-    console.log(`Omni Elements Address: ${localOmniElementAddress}`)
 
     // This is an external deployment pulled in from @layerzerolabs/lz-evm-sdk-v2
     //
@@ -46,7 +43,6 @@ const deployOmniXMultisender: DeployFunction = async (hre) => {
         contract: 'contracts/OmniXMultisender.sol:OmniXMultisender',
         args: [
             endpointV2Deployment.address, // LayerZero's EndpointV2 address
-            localOmniElementAddress // address of Omni Elements (discount ERC-721), empty if a collection is not deployed on a chain
         ],
         log: true,
         skipIfAlreadyDeployed: false,
