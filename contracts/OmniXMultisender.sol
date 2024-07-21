@@ -310,7 +310,7 @@ contract OmniXMultisender is Ownable {
     /// Fallback
     /// -----------------------------------------------------------------------
 
-    receive() external payable virtual { }
+    receive() external payable virtual {}
 
     fallback() external payable virtual {}
 }
