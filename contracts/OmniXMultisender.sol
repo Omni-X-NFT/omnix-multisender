@@ -21,13 +21,11 @@ import {
     SetConfigParam
 } from "@layerzerolabs/lz-evm-protocol-v2/contracts/interfaces/IMessageLibManager.sol";
 
-import { LibZip } from "solady/src/utils/LibZip.sol";
 import { Ownable } from "solady/src/auth/Ownable.sol";
-import { Initializable } from "solady/src/utils/Initializable.sol";
 import { SafeTransferLib } from "solady/src/utils/SafeTransferLib.sol";
 
 /// @title OmniXMultisender
-contract OmniXMultisender is Initializable, Ownable {
+contract OmniXMultisender is Ownable {
 
     // Events
     event PeerSet(uint32 indexed remoteEid, bytes32 indexed remoteAddress);
@@ -314,7 +312,5 @@ contract OmniXMultisender is Initializable, Ownable {
 
     receive() external payable virtual { }
 
-    fallback() external payable virtual {
-        LibZip.cdFallback();
-    }
+    fallback() external payable virtual {}
 }
