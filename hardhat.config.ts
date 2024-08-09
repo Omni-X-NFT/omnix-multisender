@@ -336,21 +336,21 @@ const config: HardhatUserConfig = {
             url: 'https://rpc.blast.io',
             accounts,
         },
-        tiltyard: {
-            eid: EndpointId.TILTYARD_V2_MAINNET,
-            url: 'https://subnets.avax.network/tiltyard/mainnet/rpc',
-            accounts,
-        },
         mode: {
             eid: EndpointId.MODE_V2_MAINNET,
             url: 'https://mainnet.mode.network',
             accounts,
         },
-        masa: {
-            eid: EndpointId.MASA_V2_MAINNET,
-            url: 'https://subnets.avax.network/masanetwork/mainnet/rpc',
-            accounts,
+        degen : {
+            eid: 30267 as EndpointId,
+            url:'https://rpc.degen.tips',
+            accounts
         },
+        sanko: {
+            eid: 30278 as EndpointId,
+            url: "https://mainnet.sanko.xyz",
+            accounts
+        }
     },
     namedAccounts: {
         deployer: {

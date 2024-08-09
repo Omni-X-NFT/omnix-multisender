@@ -34,18 +34,8 @@ const fantomOmniXMultisender = {
     contractName: 'OmniXMultisender',
 }
 
-const dfkOmniXMultisender = {
-    eid: EndpointId.DFK_V2_MAINNET,
-    contractName: 'OmniXMultisender',
-}
-
 const harmonyOmniXMultisender = {
     eid: EndpointId.HARMONY_V2_MAINNET,
-    contractName: 'OmniXMultisender',
-}
-
-const dexalotOmniXMultisender = {
-    eid: EndpointId.DEXALOT_V2_MAINNET,
     contractName: 'OmniXMultisender',
 }
 
@@ -97,11 +87,6 @@ const cantoOmniXMultisender = {
     contractName: 'OmniXMultisender',
 }
 
-const zksyncOmniXMultisender = {
-    eid: EndpointId.ZKSYNC_V2_MAINNET,
-    contractName: 'OmniXMultisender',
-}
-
 const moonriverOmniXMultisender = {
     eid: EndpointId.MOONRIVER_V2_MAINNET,
     contractName: 'OmniXMultisender',
@@ -143,7 +128,7 @@ const optimismOmniXMultisender = {
 }
 
 const lineaOmniXMultisender = {
-    eid: EndpointId.LIF3_V2_MAINNET,
+    eid: 30183,
     contractName: 'OmniXMultisender',
 }
 
@@ -167,16 +152,6 @@ const opBNBOmniXMultisender = {
     contractName: 'OmniXMultisender',
 }
 
-const astarOmniXMultisender = {
-    eid: EndpointId.ASTAR_V2_MAINNET,
-    contractName: 'OmniXMultisender',
-}
-
-const auroraOmniXMultisender = {
-    eid: EndpointId.AURORA_V2_MAINNET,
-    contractName: 'OmniXMultisender',
-}
-
 const confluxOmniXMultisender = {
     eid: EndpointId.CONFLUX_V2_MAINNET,
     contractName: 'OmniXMultisender',
@@ -197,20 +172,11 @@ const eonOmniXMultisender = {
     contractName: 'OmniXMultisender',
 }
 
-const xplaOmniXMultisender = {
-    eid: EndpointId.XPLA_V2_MAINNET,
-    contractName: 'OmniXMultisender',
-}
-
 const mantaOmniXMultisender = {
     eid: EndpointId.MANTA_V2_MAINNET,
     contractName: 'OmniXMultisender',
 }
 
-const shimmerOmniXMultisender = {
-    eid: EndpointId.SHIMMER_V2_MAINNET,
-    contractName: 'OmniXMultisender',
-}
 
 const raribleOmniXMultisender = {
     eid: EndpointId.RARIBLE_V2_MAINNET,
@@ -227,23 +193,23 @@ const blastOmniXMultisender = {
     contractName: 'OmniXMultisender',
 }
 
-const tiltyardOmniXMultisender = {
-    eid: EndpointId.TILTYARD_V2_MAINNET,
-    contractName: 'OmniXMultisender',
-}
-
 const modeOmniXMultisender = {
     eid: EndpointId.MODE_V2_MAINNET,
     contractName: 'OmniXMultisender',
 }
 
-const masaOmniXMultisender = {
-    eid: EndpointId.MASA_V2_MAINNET,
+const fraxtalOmniXMultisender = {
+    eid: EndpointId.FRAXTAL_V2_MAINNET,
     contractName: 'OmniXMultisender',
 }
 
-const fraxtalOmniXMultisender = {
-    eid: EndpointId.FRAXTAL_V2_MAINNET,
+const degenOmniXMultisender = {
+    eid: 30267,
+    contractName: 'OmniXMultisender',
+}
+
+const sankoOmniXMultisender = {
+    eid: 30278,
     contractName: 'OmniXMultisender',
 }
 
@@ -275,13 +241,7 @@ export default {
             contract: fantomOmniXMultisender,
         },
         {
-            contract: dfkOmniXMultisender,
-        },
-        {
             contract: harmonyOmniXMultisender,
-        },
-        {
-            contract: dexalotOmniXMultisender,
         },
         {
             contract: celoOmniXMultisender,
@@ -312,9 +272,6 @@ export default {
         },
         {
             contract: cantoOmniXMultisender,
-        },
-        {
-            contract: zksyncOmniXMultisender,
         },
         {
             contract: moonriverOmniXMultisender,
@@ -353,12 +310,6 @@ export default {
             contract: opBNBOmniXMultisender,
         },
         {
-            contract: astarOmniXMultisender,
-        },
-        {
-            contract: auroraOmniXMultisender,
-        },
-        {
             contract: confluxOmniXMultisender,
         },
         {
@@ -371,13 +322,7 @@ export default {
             contract: eonOmniXMultisender,
         },
         {
-            contract: xplaOmniXMultisender,
-        },
-        {
             contract: mantaOmniXMultisender,
-        },
-        {
-            contract: shimmerOmniXMultisender,
         },
         {
             contract: raribleOmniXMultisender,
@@ -389,42 +334,17 @@ export default {
             contract: blastOmniXMultisender,
         },
         {
-            contract: tiltyardOmniXMultisender,
-        },
-        {
             contract: modeOmniXMultisender,
         },
         {
-            contract: masaOmniXMultisender,
+            contract: fraxtalOmniXMultisender,
         },
         {
-            contract: fraxtalOmniXMultisender
+            contract: degenOmniXMultisender,
+        },
+        {
+            contract: sankoOmniXMultisender,
         }
     ],
-    connections: [
-        {
-            from: baseOmniXMultisender,
-            to: optimismOmniXMultisender,
-        },
-        {
-            from: baseOmniXMultisender,
-            to: arbitrumOmniXMultisender,
-        },
-        {
-            from: optimismOmniXMultisender,
-            to: baseOmniXMultisender,
-        },
-        {
-            from: optimismOmniXMultisender,
-            to: arbitrumOmniXMultisender,
-        },
-        {
-            from: arbitrumOmniXMultisender,
-            to: optimismOmniXMultisender,
-        },
-        {
-            from: arbitrumOmniXMultisender,
-            to: baseOmniXMultisender,
-        },
-    ],
+    connections: [],
 }
