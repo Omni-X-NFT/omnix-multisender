@@ -118,7 +118,7 @@ const config: HardhatUserConfig = {
         },
         arbitrum: {
             eid: EndpointId.ARBITRUM_V2_MAINNET,
-            url: 'https://rpc.ankr.com/arbitrum',
+            url: 'https://arbitrum.llamarpc.com',
             accounts,
         },
         bnb: {
@@ -231,11 +231,6 @@ const config: HardhatUserConfig = {
             url: 'https://evm.kava.io',
             accounts,
         },
-        meter: {
-            eid: EndpointId.METER_V2_MAINNET,
-            url: 'https://rpc.meter.io',
-            accounts,
-        },
         mantle: {
             eid: EndpointId.MANTLE_V2_MAINNET,
             url: 'https://mantle.drpc.org',
@@ -271,16 +266,6 @@ const config: HardhatUserConfig = {
             url: 'https://opbnb-rpc.publicnode.com',
             accounts,
         },
-        astar: {
-            eid: EndpointId.ASTAR_V2_MAINNET,
-            url: 'https://1rpc.io/astr',
-            accounts,
-        },
-        aurora: {
-            eid: EndpointId.AURORA_MAINNET,
-            url: 'https://arbitrum-nova.drpc.org',
-            accounts,
-        },
         conflux: {
             eid: EndpointId.CONFLUX_V2_MAINNET,
             url: 'https://evm.confluxrpc.com',
@@ -299,11 +284,6 @@ const config: HardhatUserConfig = {
         eon: {
             eid: EndpointId.EON_V2_MAINNET,
             url: 'https://rpc.ankr.com/horizen_eon',
-            accounts,
-        },
-        xpla: {
-            eid: EndpointId.XPLA_V2_MAINNET,
-            url: 'https://dimension-evm-rpc.xpla.dev',
             accounts,
         },
         manta: {
@@ -336,21 +316,21 @@ const config: HardhatUserConfig = {
             url: 'https://rpc.blast.io',
             accounts,
         },
-        tiltyard: {
-            eid: EndpointId.TILTYARD_V2_MAINNET,
-            url: 'https://subnets.avax.network/tiltyard/mainnet/rpc',
-            accounts,
-        },
         mode: {
             eid: EndpointId.MODE_V2_MAINNET,
             url: 'https://mainnet.mode.network',
             accounts,
         },
-        masa: {
-            eid: EndpointId.MASA_V2_MAINNET,
-            url: 'https://subnets.avax.network/masanetwork/mainnet/rpc',
-            accounts,
+        degen : {
+            eid: 30267 as EndpointId,
+            url:'https://rpc.degen.tips',
+            accounts
         },
+        sanko: {
+            eid: 30278 as EndpointId,
+            url: "https://mainnet.sanko.xyz",
+            accounts
+        }
     },
     namedAccounts: {
         deployer: {

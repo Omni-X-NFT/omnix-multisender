@@ -4,7 +4,7 @@ import { HardhatRuntimeEnvironment, TaskArguments } from 'hardhat/types'
 import {  allNetworks, MainnetV2NetworkToEndpointId} from '../constants/deploymentAddresses'
 
 import { OmniXMultisender, OmniXMultisender__factory } from '../typechain-types'
-import { BigNumberish, BytesLike, zeroPadValue } from 'ethers'
+import { BigNumberish, BytesLike } from 'ethers'
 
 task(`setPeers`, 'setPeers for a Multisender contract. used for connecting instances deployed on different chains')
 .setAction(async (taskArguments: TaskArguments, hre: HardhatRuntimeEnvironment) => {
@@ -24,7 +24,7 @@ task(`setPeers`, 'setPeers for a Multisender contract. used for connecting insta
             console.log(destinationNetworkId)
             remoteEids.push(destinationNetworkId)
             // we are assuming here that the multisender on all other networks has the same address as on the source one
-            remoteDeploymentAddresses.push(zeroPadValue(omniXMultisenderAddress,32))
+            remoteDeploymentAddresses.push(ethers.utils.zeroPad(omniXMultisenderAddress,32))
             console.log(remoteDeploymentAddresses[i].length)
         });
 
