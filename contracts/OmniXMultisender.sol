@@ -72,7 +72,7 @@ contract OmniXMultisender is Ownable {
     /// Actions
     /// -----------------------------------------------------------------------
 
-    /// @notice Use this function to send funds on any number of supported chains. Use 0 for customGasLimit if you do not want to override the default one.
+    /// @notice Use this function to send funds to any number of supported chains. Use 0 for customGasLimit if you do not want to override the default one. Override might be necessary when selecting 20+ destination chains at once.
     /// @dev The name of the function has been selected to optimize for its place at the top of the dispatch order, as well as using calldata instead of memory for further performance.
     function sendDeposits_3FF34E(uint32[] calldata dstEids, uint128[] calldata amounts, uint24 customGasLimit)
         external
@@ -103,7 +103,7 @@ contract OmniXMultisender is Ownable {
         emit Withdrawal(token, to); // Emit event
     }
 
-    /// @dev Set peers for your contract. Deploy at once on all chains from a clean wallet to have the same address, alternatively you can try various CREATE2 and CREATE3 tools.
+    /// @dev Set peers for your contract. Deploy at once on all chains from a clean wallet to have the same address on every chain, alternatively you can try various CREATE2 and CREATE3 tools.
     function setPeers(uint32[] calldata remoteEids, bytes32[] calldata remoteAddresses)
         external
         virtual
@@ -180,7 +180,7 @@ contract OmniXMultisender is Ownable {
         return _createSendDepositOption(dstEid, amount, to, customGasLimit);
     }
  
-    /// @notice Use this function to estimate fees for your cross-chain send. It is reccomended to pass a slightly higher value than returned from here for better UX, any excess will be refunded back to the user.
+    /// @notice Use this function to estimate fees for your cross-chain sendDeposits. It is reccomended to pass a slightly higher value than returned from here for better UX, any excess will be refunded back to the user.
     function estimateLZFees(uint32[] calldata _dstEids, uint128[] calldata _amounts, address _to)
         external
         view
