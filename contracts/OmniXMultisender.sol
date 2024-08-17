@@ -23,18 +23,21 @@ import { SafeTransferLib } from "solady/src/utils/SafeTransferLib.sol";
 /// @title Omni X Multisender
 /// @author Omni X
 /// @notice Omni X Mutlsender allows you to send gas aka refuel your account on a number of EVM chains at once with no fees and close to perfect gas optimizations
-/// @dev This multisender implementation is close to perfect but can be even further improved upon with inline assembly, yul, etc.
-/// @custom:donation This contract is completely free. If you would like to donate you can send 
+/// @dev This multisender implementation is close to perfect for plain solidity, but can be even further improved upon with inline assembly, yul, etc.
+/// @custom:donation This contract is completely free to use and fork, we do not take any extra fees. If you would like to donate you can send ETH or ERC-20s directly here, thank you🥰 
 contract OmniXMultisender is Initializable, Ownable {
 
-    // Events
+    /// -----------------------------------------------------------------------
+    /// Events
+    /// -----------------------------------------------------------------------
     event PeerSet(uint32 indexed remoteEid, bytes32 indexed remoteAddress);
     event GasLimitSet(uint32 indexed remoteEid, uint128 indexed gasLimit);
     event Withdrawal(address token, address to);
+    event UlnConfigSet(address lib, uint64 confirmations, uint32[] eids, address dvn);
+
     /// -----------------------------------------------------------------------
     /// Custom Errors
     /// -----------------------------------------------------------------------
-
     error InsufficientNativeValue(); // 0x35898e6e
 
     error ArrayLengthsMustMatch(); // 0x587543d1
@@ -81,7 +84,7 @@ contract OmniXMultisender is Initializable, Ownable {
         _sendDeposits(dstEids, amounts, msg.sender, customGasLimit);
     }
 
-    /// @notice Same sendDeposits function as above just to a different address than your own
+    /// @notice Same sendDeposits function as above just to a different address than your own.
     /// @dev This function's name and place in the call stack has not been optimized as most of the time users will send the gas to themselves
     function sendDeposits(
         uint32[] calldata dstEids,
@@ -102,6 +105,7 @@ contract OmniXMultisender is Initializable, Ownable {
         emit Withdrawal(token, to); // Emit event
     }
 
+    /// @dev Set peers for your contract. Deploy at once on all chains from a clean wallet to have the same address, alternatively you can try various CREATE2 and CREATE3 tools.
     function setPeers(uint32[] calldata remoteEids, bytes32[] calldata remoteAddresses)
         external
         virtual
@@ -116,7 +120,7 @@ contract OmniXMultisender is Initializable, Ownable {
         }
     }
 
-    /// @notice Set custom gas limit for a number of paths
+    /// @notice Set a custom gas limit for a number of paths.
     function setGasLimit(uint32[] calldata remoteEids, uint128[] calldata gasLimits)
         external
         virtual
@@ -133,6 +137,7 @@ contract OmniXMultisender is Initializable, Ownable {
         endpoint().setDelegate(delegate);
     }
 
+    /// @dev lib version, number of confirmations and DVN MUST match EXACTLY between two chains for the contract to work.
     function setUlnConfigs(
         address lib,
         uint64 confirmations,
@@ -161,6 +166,7 @@ contract OmniXMultisender is Initializable, Ownable {
         }
 
         IMessageLibManager(address(endpoint())).setConfig(address(this), lib, configs);
+        emit UlnConfigSet(lib, confirmations, eids, dvn); // Emit event
     }
 
     /// -----------------------------------------------------------------------
