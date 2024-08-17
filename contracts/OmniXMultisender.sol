@@ -15,9 +15,7 @@ import {
     SetConfigParam
 } from "@layerzerolabs/lz-evm-protocol-v2/contracts/interfaces/IMessageLibManager.sol";
 
-import { LibZip } from "solady/src/utils/LibZip.sol";
 import { Ownable } from "solady/src/auth/Ownable.sol";
-import { Initializable } from "solady/src/utils/Initializable.sol";
 import { SafeTransferLib } from "solady/src/utils/SafeTransferLib.sol";
 
 /// @title Omni X Multisender
@@ -25,7 +23,7 @@ import { SafeTransferLib } from "solady/src/utils/SafeTransferLib.sol";
 /// @notice Omni X Mutlsender allows you to send gas aka refuel your account on a number of EVM chains at once with no fees and close to perfect gas optimizations
 /// @dev This multisender implementation is close to perfect for plain solidity, but can be even further improved upon with inline assembly, yul, etc.
 /// @custom:donation This contract is completely free to use and fork, we do not take any extra fees. If you would like to donate you can send ETH or ERC-20s directly here, thank you🥰 
-contract OmniXMultisender is Initializable, Ownable {
+contract OmniXMultisender is Ownable {
 
     /// -----------------------------------------------------------------------
     /// Events
@@ -322,9 +320,7 @@ contract OmniXMultisender is Initializable, Ownable {
     /// Fallback
     /// -----------------------------------------------------------------------
 
-    receive() external payable virtual { }
+    receive() external payable virtual {}
 
-    fallback() external payable virtual {
-        LibZip.cdFallback();
-    }
+    fallback() external payable virtual {}
 }

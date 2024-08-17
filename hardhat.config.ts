@@ -118,7 +118,7 @@ const config: HardhatUserConfig = {
         },
         arbitrum: {
             eid: EndpointId.ARBITRUM_V2_MAINNET,
-            url: 'https://rpc.ankr.com/arbitrum',
+            url: 'https://arbitrum.llamarpc.com',
             accounts,
         },
         bnb: {
