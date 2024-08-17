@@ -231,11 +231,6 @@ const config: HardhatUserConfig = {
             url: 'https://evm.kava.io',
             accounts,
         },
-        meter: {
-            eid: EndpointId.METER_V2_MAINNET,
-            url: 'https://rpc.meter.io',
-            accounts,
-        },
         mantle: {
             eid: EndpointId.MANTLE_V2_MAINNET,
             url: 'https://mantle.drpc.org',
@@ -271,16 +266,6 @@ const config: HardhatUserConfig = {
             url: 'https://opbnb-rpc.publicnode.com',
             accounts,
         },
-        astar: {
-            eid: EndpointId.ASTAR_V2_MAINNET,
-            url: 'https://1rpc.io/astr',
-            accounts,
-        },
-        aurora: {
-            eid: EndpointId.AURORA_MAINNET,
-            url: 'https://arbitrum-nova.drpc.org',
-            accounts,
-        },
         conflux: {
             eid: EndpointId.CONFLUX_V2_MAINNET,
             url: 'https://evm.confluxrpc.com',
@@ -299,11 +284,6 @@ const config: HardhatUserConfig = {
         eon: {
             eid: EndpointId.EON_V2_MAINNET,
             url: 'https://rpc.ankr.com/horizen_eon',
-            accounts,
-        },
-        xpla: {
-            eid: EndpointId.XPLA_V2_MAINNET,
-            url: 'https://dimension-evm-rpc.xpla.dev',
             accounts,
         },
         manta: {

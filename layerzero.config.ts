@@ -102,11 +102,6 @@ const arbitrumNovaOmniXMultisender = {
     contractName: 'OmniXMultisender',
 }
 
-const meterOmniXMultisender = {
-    eid: EndpointId.METER_V2_MAINNET,
-    contractName: 'OmniXMultisender',
-}
-
 const kavaOmniXMultisender = {
     eid: EndpointId.KAVA_V2_MAINNET,
     contractName: 'OmniXMultisender',
@@ -281,10 +276,7 @@ export default {
         },
         {
             contract: arbitrumNovaOmniXMultisender,
-        },
-        {
-            contract: meterOmniXMultisender,
-        },
+        },,
         {
             contract: kavaOmniXMultisender,
         },
