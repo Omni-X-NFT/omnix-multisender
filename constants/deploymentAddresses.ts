@@ -6,7 +6,7 @@ export const firstCloneDeploymentAddress = '0x559Ac215767928ca3c8A8a67a717bcC578
 
 export const secondCloneDeploymentAddress = '0xBDFe87Ab00357cE95CaE6dd8f557041A5F8B5870'
 
-export const allNetworks = ['avalanche', 'base', 'beam', 'blast', 'canto', 'celo', 'conflux', 'core', 'dos', 'ethereum', 'fantom', 'fraxtal', 'fuse', 'gnosis', 'harmony', 'eon', 'kava', 'klaytn', 'linea', 'loot', 'manta', 'mantle', 'mode', 'moonbeam', 'moonriver', 'okx', 'opBNB', 'optimism', 'rarible', 'scroll', 'telos', 'tenet', 'xai', 'arbitrum', 'nova', 'metis', 'polygon', 'zora', 'orderly']
+export const allNetworks = ['arbitrum', 'avalanche', 'base', 'beam', 'blast', 'bsc', 'canto', 'celo', 'conflux', 'core', 'dos', 'degen', 'ethereum', 'fantom', 'fraxtal', 'fuse', 'gnosis', 'harmony', 'eon', 'kava', 'klaytn', 'linea', 'loot', 'manta', 'mantle', 'mode', 'moonbeam', 'moonriver', 'okx', 'opBNB', 'optimism', 'nova', 'metis', 'polygon', 'orderly','rarible', 'sanko', 'scroll', 'telos','tenet', 'xai', 'zora']
 
 export const omnixDVNeids = [30101, 30102, 30106, 30109, 30110, 30111, 30112, 30184]
 
@@ -162,4 +162,6 @@ export enum  MainnetV2NetworkToEndpointId {
   'mode' = 30260,
   'masa' = 30263,
   'homeverse' = 30265,
+  'degen' = 30267,
+  'sanko' = 30278 
 }

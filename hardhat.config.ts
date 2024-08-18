@@ -133,12 +133,12 @@ const config: HardhatUserConfig = {
         },
         polygon: {
             eid: EndpointId.POLYGON_V2_MAINNET,
-            url: 'https://polygon-pokt.nodies.app',
+            url: 'https://polygon.llamarpc.com',
             accounts,
         },
         fantom: {
             eid: EndpointId.FANTOM_V2_MAINNET,
-            url: 'https://rpc.ankr.com/fantom',
+            url: 'https://fantom-pokt.nodies.app',
             accounts,
         },
         dfk: {
@@ -173,7 +173,7 @@ const config: HardhatUserConfig = {
         },
         gnosis: {
             eid: EndpointId.GNOSIS_V2_MAINNET,
-            url: 'https://gnosis-pokt.nodies.app',
+            url: 'https://gnosis.drpc.org/',
             accounts,
         },
         dos: {
@@ -198,7 +198,7 @@ const config: HardhatUserConfig = {
         },
         okx: {
             eid: EndpointId.OKX_V2_MAINNET,
-            url: 'https://1rpc.io/oktc',
+            url: 'https://exchainrpc.okex.org',
             accounts,
         },
         canto: {
@@ -223,7 +223,7 @@ const config: HardhatUserConfig = {
         },
         nova: {
             eid: EndpointId.NOVA_V2_MAINNET,
-            url: 'https://arbitrum-nova.drpc.org',
+            url: 'https://arbitrum-nova-rpc.publicnode.com',
             accounts,
         },
         kava: {
@@ -288,7 +288,7 @@ const config: HardhatUserConfig = {
         },
         manta: {
             eid: EndpointId.MANTA_V2_MAINNET,
-            url: 'https://1rpc.io/manta',
+            url: 'https://manta.nirvanalabs.xyz/mantapublic',
             accounts,
         },
         shimmer: {
