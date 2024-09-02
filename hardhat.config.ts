@@ -103,7 +103,7 @@ const config: HardhatUserConfig = {
     networks: {
         ethereum: {
             eid: EndpointId.ETHEREUM_V2_MAINNET,
-            url: 'https://ethereum-rpc.publicnode.com',
+            url: process.env.ETHEREUM_RPC,
             accounts, 
         },
         base: {
@@ -123,7 +123,7 @@ const config: HardhatUserConfig = {
         },
         bnb: {
             eid: EndpointId.BSC_V2_MAINNET,
-            url: 'https://binance.llamarpc.com',
+            url: process.env.BNB_RPC,
             accounts,
         },
         avalanche: {
@@ -133,12 +133,12 @@ const config: HardhatUserConfig = {
         },
         polygon: {
             eid: EndpointId.POLYGON_V2_MAINNET,
-            url: 'https://polygon-pokt.nodies.app',
+            url: process.env.POLYGON_RPC,
             accounts,
         },
         fantom: {
             eid: EndpointId.FANTOM_V2_MAINNET,
-            url: 'https://rpc.ankr.com/fantom',
+            url: process.env.FANTOM_RPC,
             accounts,
         },
         dfk: {
@@ -148,7 +148,7 @@ const config: HardhatUserConfig = {
         },
         harmony: {
             eid: EndpointId.HARMONY_V2_MAINNET,
-            url: 'https://api.harmony.one',
+            url: process.env.HARMONY_RPC,
             accounts,
         },
         dexalot: {
@@ -183,7 +183,7 @@ const config: HardhatUserConfig = {
         },
         klaytn: {
             eid: EndpointId.KLAYTN_V2_MAINNET,
-            url: 'https://1rpc.io/klay',
+            url: 'https://public-en.node.kaia.io',
             accounts,
         },
         metis: {
@@ -198,7 +198,7 @@ const config: HardhatUserConfig = {
         },
         okx: {
             eid: EndpointId.OKX_V2_MAINNET,
-            url: 'https://1rpc.io/oktc',
+            url: 'https://exchainrpc.okex.org',
             accounts,
         },
         canto: {
@@ -223,7 +223,7 @@ const config: HardhatUserConfig = {
         },
         nova: {
             eid: EndpointId.NOVA_V2_MAINNET,
-            url: 'https://arbitrum-nova.drpc.org',
+            url: 'https://arbitrum-nova-rpc.publicnode.com',
             accounts,
         },
         kava: {
@@ -288,7 +288,7 @@ const config: HardhatUserConfig = {
         },
         manta: {
             eid: EndpointId.MANTA_V2_MAINNET,
-            url: 'https://1rpc.io/manta',
+            url: 'https://manta.nirvanalabs.xyz/mantapublic',
             accounts,
         },
         shimmer: {

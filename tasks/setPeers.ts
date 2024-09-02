@@ -4,7 +4,7 @@ import { HardhatRuntimeEnvironment, TaskArguments } from 'hardhat/types'
 import {  allNetworks, MainnetV2NetworkToEndpointId} from '../constants/deploymentAddresses'
 
 import { OmniXMultisender, OmniXMultisender__factory } from '../typechain-types'
-import { BigNumberish, BytesLike } from 'ethers'
+import { BigNumberish, BytesLike, zeroPadValue } from 'ethers'
 
 task(`setPeers`, 'setPeers for a Multisender contract. used for connecting instances deployed on different chains')
 .setAction(async (taskArguments: TaskArguments, hre: HardhatRuntimeEnvironment) => {
@@ -13,19 +13,19 @@ task(`setPeers`, 'setPeers for a Multisender contract. used for connecting insta
         const [owner] = await ethers.getSigners()
 
         // connect to an instance of OmniXMultisender and set appropriate constants
-        const omniXMultisenderAddress = (await hre.deployments.get('OmniXMultisender')).address
+        // const omniXMultisenderAddress = (await hre.deployments.get('OmniXMultisender')).address
+        const omniXMultisenderAddress = '0x43a1421B40A6FEAb59850dDE01D5662A336D9304'
         const remoteEids:BigNumberish[] = []
         const remoteDeploymentAddresses: BytesLike[] = []
 
         allNetworks.forEach((element, i) => {
-            console.log('For each element')
             console.log(element)
             const destinationNetworkId = MainnetV2NetworkToEndpointId[element as keyof typeof MainnetV2NetworkToEndpointId]
             console.log(destinationNetworkId)
             remoteEids.push(destinationNetworkId)
             // we are assuming here that the multisender on all other networks has the same address as on the source one
-            remoteDeploymentAddresses.push(ethers.utils.zeroPad(omniXMultisenderAddress,32))
-            console.log(remoteDeploymentAddresses[i].length)
+            remoteDeploymentAddresses.push(zeroPadValue(omniXMultisenderAddress,32))
+            console.log(remoteDeploymentAddresses.length)
         });
 
         const omniXMultisender: OmniXMultisender = OmniXMultisender__factory.connect(
