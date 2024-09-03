@@ -1,20 +1,10 @@
 <p align="center">
-  <a href="https://layerzero.network">
-    <img alt="LayerZero" style="max-width: 500px" src="https://d3a2dpnnrypp5h.cloudfront.net/bridge-app/lz.png"/>
-  </a>
+  <a href="https://send.omni-x.io/" style="color: #a77dff">Homepage</a> | <a href="https://cantina.xyz/portfolio/a18b37fe-425b-4a7c-b0b9-b11eaa24ee85" style="color: #a77dff">Cantina Audit</a>
 </p>
 
-<p align="center">
-  <a href="https://layerzero.network" style="color: #a77dff">Homepage</a> | <a href="https://docs.layerzero.network/" style="color: #a77dff">Docs</a> | <a href="https://layerzero.network/developers" style="color: #a77dff">Developers</a>
-</p>
+<h1 align="center">Omni X Multisender</h1>
 
-<h1 align="center">OmniXMultisender STAGING TESTING</h1>
-
-<p align="center">
-  <a href="https://docs.layerzero.network/contracts/oapp" style="color: #a77dff">Quickstart</a> | <a href="https://docs.layerzero.network/contracts/oapp-configuration" style="color: #a77dff">Configuration</a> | <a href="https://docs.layerzero.network/contracts/options" style="color: #a77dff">Message Execution Options</a> | <a href="https://docs.layerzero.network/contracts/endpoint-addresses" style="color: #a77dff">Endpoint Addresses</a>
-</p>
-
-<p align="center">Template project for getting started with LayerZero's  <code>OApp</code> contract development.</p>
+<p align="center">This documentation inherits from a template project for getting started with LayerZero's  <code>OApp</code> contract development.</p>
 
 ## 1) Developing Contracts
 
@@ -79,6 +69,7 @@ Or adjust the `package.json` to for example remove `hardhat` tests:
 Set up deployer wallet/account:
 
 - Rename `.env.example` -> `.env`
+- Create and fund a new wallet
 - Choose your preferred means of setting up your deployer wallet/account:
 
 ```
@@ -101,7 +92,25 @@ npx hardhat lz:deploy --help
 
 By following these steps, you can focus more on creating innovative omnichain solutions and less on the complexities of cross-chain communication.
 
-<br></br>
+## 3) Setting up contracts
+
+There are 2 main set up steps for Omni X Multisender. Before executing the set up, set the deployment address and chain related constants to yours in the constants folder
+
+First, run the following command to setPeers on every deployed chain:
+
+```bash
+npx hardhat setPeers --network ethereum  
+```
+
+This will be automated in the future however it is still beneficial to run chains one by one or in small groups as error handling in case of multiple failures in 30+ network environment could get cumbersome.
+
+Next, run:
+
+```bash
+npx hardhat setUlnConfigs --network ethereum  
+```
+
+By default it will use a lean single DVN config with either Omni X DVN or LayerZero DVN depending on the chain availability. We reccomend using exactly the same config, but of course you are free to change number and types of DVNs that you want to use. Note that the number of confirmations, optional or required DVNs, and their types MUST MATCH EXACTLY between a source and a destination chain.
 
 <p align="center">
   Join our community on <a href="https://discord-layerzero.netlify.app/discord" style="color: #a77dff">Discord</a> | Follow us on <a href="https://twitter.com/LayerZero_Labs" style="color: #a77dff">Twitter</a>
