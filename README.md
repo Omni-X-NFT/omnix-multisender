@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://send.omni-x.io/" style="color: #a77dff">Homepage</a> | <a href="https://cantina.xyz/portfolio/a18b37fe-425b-4a7c-b0b9-b11eaa24ee85" style="color: #a77dff">Cantina Audit</a>
+  <a href="https://send.omni-x.io/" style="color: #a77dff">Homepage</a> | <a href="https://cantina.xyz/portfolio/c44dcd35-a8c7-446d-9e99-95a57974a979" style="color: #a77dff">Cantina Audit</a>
 </p>
 
 <h1 align="center">Omni X Multisender</h1>
